@@ -1,0 +1,16 @@
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net5.0\TriangleGame.exe
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net5.0\TriangleGame.deps.json
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net5.0\TriangleGame.runtimeconfig.json
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net5.0\TriangleGame.runtimeconfig.dev.json
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net5.0\TriangleGame.dll
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net5.0\ref\TriangleGame.dll
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net5.0\TriangleGame.pdb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.csprojAssemblyReference.cache
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.AssemblyInfoInputs.cache
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.AssemblyInfo.cs
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.csproj.CoreCompileInputs.cache
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.dll
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\ref\TriangleGame.dll
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.pdb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net5.0\TriangleGame.genruntimeconfig.cache
