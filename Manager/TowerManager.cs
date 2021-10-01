@@ -90,9 +90,11 @@ namespace TriangleGame.Manager
             }
         }
         
-        public void Connect(Tower t)
+        public void Connect(Tower t, bool startup = false)
         {
             bool invalid = false;
+            int areas = 0;
+
             foreach (var tower1 in _towers.Where(p => Vector2.Distance(t.Position.ToVector2(), p.Position.ToVector2()) < 180))
             {
                 if (t == tower1) continue;
@@ -101,13 +103,14 @@ namespace TriangleGame.Manager
                 if (!(distance > 20) || !(distance < 180)) continue;
                 var c1 = new Connector(t, tower1);
                 bool intersect = false;
+                
                 foreach (var connector in _connectors.Where(connector => c1.Intersects(connector)))
                 {
                     intersect = true;
                 }
 
                 if (intersect) continue;
-
+                
                 _connectors.Add(c1);
                 var dist = _connectors[_connectors.Count - 1].Length;
 
@@ -156,12 +159,18 @@ namespace TriangleGame.Manager
                                 }*/
                                 Area area = new Area(c1, c2, c3);
                                 _areas.Add(area);
+                                areas++;
                             }
                         }
                     }
                 }
             }
 
+            if (areas == 0 && !startup)
+            {
+                RemoveConnections(t);
+                _towers.Remove(t);
+            }
             if (invalid)
             {
                 RemoveConnections(t);

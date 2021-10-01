@@ -75,6 +75,7 @@ namespace TriangleGame
             float c2 = a2 * connector.TowerA.Position.X + b2 * connector.TowerA.Position.Y;
 
             float delta = a1 * b2 - a2 * b1;
+            //float delta = a1 * b2 - a2 * b1;
 
             if (delta == 0)
             {

@@ -41,6 +41,19 @@ namespace TriangleGame
             
             _towerManager = new TowerManager();
             _towerManager.GenerateOres(_boundaries, test);
+
+            /*
+            Tower t1 = new Tower(new Point(1, 1), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
+            Tower t2 = new Tower(new Point(1, 10), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
+            Tower t3 = new Tower(new Point(0, 2), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
+            Tower t4 = new Tower(new Point(8, 9), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
+
+            Connector c1 = new Connector(t1, t2);
+            Connector c2 = new Connector(t3, t4);
+            
+            Console.WriteLine("CUT: " + c1.Intersects(c2));
+            Console.WriteLine("CUT: " + c2.Intersects(c1));*/
+            
         }
 
         protected override void LoadContent()
@@ -121,7 +134,14 @@ namespace TriangleGame
 
                 if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
                 {
-                    _towerManager.Connect(newTower);
+                    if (_towerManager.Towers.Count < 3)
+                    {
+                        _towerManager.Connect(newTower, true);
+                    }
+                    else
+                    {
+                        _towerManager.Connect(newTower);
+                    }
                 }
             }
 
@@ -132,7 +152,7 @@ namespace TriangleGame
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(218, 105, 50, 255));
 
             //MAP
             spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.Position, 0)));

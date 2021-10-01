@@ -28,7 +28,6 @@ namespace TriangleGame
                     _color = Color.Black;
                     Dimensions = new Point(24, 24);
                     break;
-                default: break;
             }
         }
 
