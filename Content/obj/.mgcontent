@@ -4,9 +4,15 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/basicfont.spritefont</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/pixel.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_inner.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_outer.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

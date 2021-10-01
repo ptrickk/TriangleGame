@@ -19,3 +19,6 @@ C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\Triangle
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.exe
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.pdb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\pixel.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\basicfont.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_inner.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_outer.xnb

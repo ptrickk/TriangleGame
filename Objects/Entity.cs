@@ -5,11 +5,11 @@ namespace TriangleGame
 {
     public class Entity
     {
-        private Point _position;
-        private Texture2D _texture2D;
-        private Color _color;
+        protected Point _position;
+        protected Texture2D _texture2D;
+        protected Color _color;
 
-        private Point _dimensions = new Point(16, 16);
+        protected Point _dimensions = new Point(16, 16);
 
         public Entity(Point position, Texture2D texture2D, Color color)
         {

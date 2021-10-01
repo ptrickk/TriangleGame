@@ -65,6 +65,11 @@ namespace TriangleGame.Manager
             }
         }
 
+        public void GenerateOres(Rectangle area, Texture2D texture)
+        {
+            GenerateOres(area.Location, area.Location + area.Size, texture);
+        }
+        
         public void GenerateOres(Point start, Point end, Texture2D texture)
         {
             if (start.X > end.X || start.Y > end.Y)
@@ -178,6 +183,17 @@ namespace TriangleGame.Manager
                 (Math.Pow(a.Length, 2) + Math.Pow(b.Length, 2) -
                  Math.Pow(c.Length, 2)) / (2 * a.Length * b.Length);
             return Math.Acos(step) * 180 / Math.PI;
+        }
+
+        public double SumArea()
+        {
+            double sum = 0;
+            foreach (var area in _areas)
+            {
+                sum += area.Size();
+            }
+
+            return sum;
         }
     }
 }
