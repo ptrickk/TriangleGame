@@ -13,7 +13,7 @@ namespace TriangleGame
             switch (type)
             {
                 case TowerType.Base:
-                    Dimensions = new Point(32, 32);
+                    Dimensions = new Point(24, 24);
                     break;
                 default: break;
             }

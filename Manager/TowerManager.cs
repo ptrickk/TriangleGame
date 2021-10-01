@@ -43,9 +43,26 @@ namespace TriangleGame.Manager
             get => _ores;
         }
 
-        public void AddTower(Tower tower)
+        public bool AddTower(Tower tower)
         {
-            _towers.Add(tower);
+            bool valid = true;
+            foreach (var area in _areas)
+            {
+                if (area.Contains(tower))
+                {
+                    valid = false;
+                }
+            }
+
+            if (valid)
+            {
+                _towers.Add(tower);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void GenerateOres(Point start, Point end, Texture2D texture)
@@ -71,7 +88,7 @@ namespace TriangleGame.Manager
         public void Connect(Tower t)
         {
             bool invalid = false;
-            foreach (var tower1 in _towers)
+            foreach (var tower1 in _towers.Where(p => Vector2.Distance(t.Position.ToVector2(), p.Position.ToVector2()) < 180))
             {
                 if (t == tower1) continue;
 

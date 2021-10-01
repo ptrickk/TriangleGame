@@ -98,7 +98,6 @@ namespace TriangleGame
                 {
                     return false;
                 }
-                Console.WriteLine("COLISION POINT" + point.ToString());
 
                 return true;
             }

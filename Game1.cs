@@ -60,8 +60,12 @@ namespace TriangleGame
                         type = TowerType.Base;
                     }
                     Tower newTower = new Tower(Mouse.GetState().Position, test,Color.Red, type);
-                    _towerManager.AddTower(newTower);
-                    _towerManager.Connect(newTower);
+                    
+                    if (_towerManager.AddTower(newTower))//Falls der Turm platziert werden kann
+                    {
+                        _towerManager.Connect(newTower);
+                    }
+                    
                 }
             }
             lastState = Mouse.GetState().LeftButton;
