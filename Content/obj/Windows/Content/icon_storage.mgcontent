@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_outer.png</SourceFile>
-  <SourceTime>2021-10-04T13:37:18.1396539+02:00</SourceTime>
-  <DestFile>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_outer.xnb</DestFile>
-  <DestTime>2021-10-05T12:51:03.0387154+02:00</DestTime>
+  <SourceFile>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/icon_storage.png</SourceFile>
+  <SourceTime>2021-10-04T23:42:45.170549+02:00</SourceTime>
+  <DestFile>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/Windows/Content/icon_storage.xnb</DestFile>
+  <DestTime>2021-10-05T13:36:45.8704813+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2020-08-10T16:17:54+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

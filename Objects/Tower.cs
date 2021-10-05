@@ -16,12 +16,15 @@ namespace TriangleGame
             switch (type)
             {
                 case TowerType.Default:
-                    _color = Color.Blue;
+                    _color = Color.Black;
                     break;
                 case TowerType.Attacker:
                     _color = Color.Red;
                     break;
                 case TowerType.Collector:
+                    _color = Color.Yellow;
+                    break;
+                case TowerType.Storage:
                     _color = Color.Green;
                     break;
                 case TowerType.Base:

@@ -14,7 +14,8 @@ namespace TriangleGame
         SpriteBatch spriteBatch;
 
         private TowerManager _towerManager;
-        private static TextureManager _textureManager = new TextureManager();
+        private TextureManager _textureManager;
+        private UIManager _uiManager;
 
         private Camera _camera;
         private Rectangle _boundaries;
@@ -31,36 +32,23 @@ namespace TriangleGame
         protected override void Initialize()
         {
             base.Initialize();
-
+            
+            
             _boundaries = new Rectangle(0, 0, 2000, 2000);
             _camera = new Camera(_boundaries.Center.ToVector2(), 2);
 
             _towerManager = new TowerManager();
             _towerManager.GenerateOres(_boundaries, _textureManager.Sprites["pixel"]);
 
-            /*
-            Tower t1 = new Tower(new Point(1, 1), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
-            Tower t2 = new Tower(new Point(1, 10), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
-            Tower t3 = new Tower(new Point(0, 2), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
-            Tower t4 = new Tower(new Point(8, 9), innerTowerTexture, outerTowerTexture, Color.Aqua, TowerType.Default);
-
-            Connector c1 = new Connector(t1, t2);
-            Connector c2 = new Connector(t3, t4);
-            
-            Console.WriteLine("CUT: " + c1.Intersects(c2));
-            Console.WriteLine("CUT: " + c2.Intersects(c1));*/
+            _uiManager = new UIManager(graphics, new Point(64, 64));
+            _uiManager.Initialize();
         }
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            _textureManager = TextureManager.Instance;
             _textureManager.LoadContent(Content);
-            /*
-            test = Content.Load<Texture2D>("pixel");
-            innerTowerTexture = Content.Load<Texture2D>("tower_inner");
-            outerTowerTexture = Content.Load<Texture2D>("tower_outer");
-            Font = Content.Load<SpriteFont>("basicfont");*/
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             var connector = new Connector(_textureManager.Sprites["pixel"]);
         }
 
@@ -99,7 +87,6 @@ namespace TriangleGame
                     (_camera.Position.X + graphics.PreferredBackBufferWidth), 0);
             }
 
-
             if (_camera.Position.Y < _boundaries.Location.Y + _boundaries.Size.Y)
             {
             }
@@ -107,44 +94,33 @@ namespace TriangleGame
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && lastState == ButtonState.Released)
             {
-                Vector2 position = Mouse.GetState().Position.ToVector2() + _camera.Position;
-                TowerType type = TowerType.Default;
-                if (_towerManager.Towers.Count == 0)
+                if (!_uiManager.UiInteraction(Mouse.GetState().Position))
                 {
-                    type = TowerType.Base;
-                }
-                else
-                {
-                    Random rand = new Random();
-                    int t = rand.Next() % 3;
-                    switch (t)
+                    Vector2 position = Mouse.GetState().Position.ToVector2() + _camera.Position;
+                    TowerType type = _uiManager.SelectedTower();
+                    
+                    if (_towerManager.Towers.Count == 0)
                     {
-                        case 0:
-                            type = TowerType.Default;
-                            break;
-                        case 1:
-                            type = TowerType.Attacker;
-                            break;
-                        case 2:
-                            type = TowerType.Collector;
-                            break;
+                        type = TowerType.Base;
                     }
-                }
 
-                Tower newTower = new Tower(position.ToPoint(), _textureManager.Sprites["innerTower"],
-                    _textureManager.Sprites["outerTower"], Color.Red, type);
+                    Tower newTower = new Tower(position.ToPoint(), _textureManager.Sprites["innerTower"],
+                        _textureManager.Sprites["outerTower"], Color.Red, type);
 
-                if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
-                {
-                    if (_towerManager.Towers.Count < 3)
+                    if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
                     {
-                        _towerManager.Connect(newTower, true);
-                    }
-                    else
-                    {
-                        _towerManager.Connect(newTower);
+                        if (_towerManager.Towers.Count < 3)
+                        {
+                            _towerManager.Connect(newTower, true);
+                        }
+                        else
+                        {
+                            _towerManager.Connect(newTower);
+                        }
                     }
                 }
+                
+                
             }
 
             lastState = Mouse.GetState().LeftButton;
@@ -185,6 +161,8 @@ namespace TriangleGame
             spriteBatch.DrawString(_textureManager.Fonts["basicfont"],
                 "Camera Position: " + _camera.Position.ToString(), new Vector2(10, 25),
                 Color.White);
+            
+            _uiManager.Draw(spriteBatch);
 
             spriteBatch.End();
 

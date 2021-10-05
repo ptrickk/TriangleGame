@@ -5,6 +5,7 @@
         Default,
         Attacker,
         Collector,
+        Storage,
         Base
     }
 }

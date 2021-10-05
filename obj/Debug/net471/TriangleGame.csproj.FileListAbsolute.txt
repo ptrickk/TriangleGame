@@ -22,3 +22,8 @@ C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\basicfont.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_inner.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_outer.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\button_frame.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\icon_attack.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\icon_collector.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\icon_storage.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_base.xnb

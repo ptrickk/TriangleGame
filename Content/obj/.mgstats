@@ -1,3 +1,2 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_inner.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_inner.xnb","TextureProcessor","Texture2DContent",584,102485,0,1710562
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_outer.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_outer.xnb","TextureProcessor","Texture2DContent",634,102485,0,0046616
+"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/button_frame.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/button_frame.xnb","TextureProcessor","Texture2DContent",741,16469,0,1658029
