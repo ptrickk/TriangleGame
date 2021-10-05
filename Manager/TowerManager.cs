@@ -15,12 +15,15 @@ namespace TriangleGame.Manager
 
         private List<Ore> _ores;
 
+        private int _storage;
+
         public TowerManager()
         {
             _towers = new List<Tower>();
             _connectors = new List<Connector>();
             _areas = new List<Area>();
             _ores = new List<Ore>();
+            _storage = 1000;
         }
 
         public List<Tower> Towers
