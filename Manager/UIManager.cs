@@ -8,6 +8,8 @@ namespace TriangleGame.Manager
     public class UIManager
     {
         private List<Button> _buttons;
+        private ResourceInfo _info;
+        
         private GraphicsDeviceManager _graphics;
         private Point _buttonSize;
 
@@ -16,6 +18,8 @@ namespace TriangleGame.Manager
             _buttons = new List<Button>();
             _graphics = graphics;
             _buttonSize = buttonSize;
+
+            _info = new ResourceInfo(new Point(10, 10), 5);
         }
 
         public void Initialize()
@@ -66,12 +70,24 @@ namespace TriangleGame.Manager
             
             return interaction;
         }
-
-        public void Draw(SpriteBatch _spriteBatch)
+        
+        public void Update(int metal, int gas, int crystals)
         {
+            Update(new int[]{metal, gas, crystals });    
+        }
+        
+        public void Update(int[] resource)
+        {
+            _info.Update(resource);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            _info.Draw(spriteBatch);
+            
             foreach (var button in _buttons)
             {
-                button.Draw(_spriteBatch);
+                button.Draw(spriteBatch);
             }
         }
     }

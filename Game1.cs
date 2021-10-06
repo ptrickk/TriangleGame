@@ -22,6 +22,8 @@ namespace TriangleGame
 
         private ButtonState lastState = ButtonState.Released;
 
+        private int test = 0;
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -58,6 +60,9 @@ namespace TriangleGame
 
         protected override void Update(GameTime gameTime)
         {
+            test++;
+            _uiManager.Update(test * 10, test * 100, test * 2);
+            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();

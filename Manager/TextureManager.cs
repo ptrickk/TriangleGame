@@ -44,7 +44,7 @@ namespace TriangleGame.Manager
             Sprites.Add("buttonStorage", Content.Load<Texture2D>("icon_storage"));
             Sprites.Add("buttonFrame", Content.Load<Texture2D>("button_frame"));
             
-            Fonts.Add("basicfont", Content.Load<SpriteFont>("basicfont"));
+            Fonts.Add("basicfont", Content.Load<SpriteFont>("minecraftianx12"));
             
             Loaded = true;
         }

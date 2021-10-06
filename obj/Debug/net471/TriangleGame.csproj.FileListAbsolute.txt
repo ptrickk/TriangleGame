@@ -27,3 +27,4 @@ C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\icon_collector.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\icon_storage.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_base.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\minecraftianx12.xnb
