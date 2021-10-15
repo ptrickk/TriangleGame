@@ -11,7 +11,6 @@ C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\SharpDX.
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\SharpDX.MediaFoundation.dll
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\SharpDX.XAudio2.dll
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\SharpDX.XInput.dll
-C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.csprojAssemblyReference.cache
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.AssemblyInfoInputs.cache
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.AssemblyInfo.cs
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.csproj.CoreCompileInputs.cache
@@ -28,3 +27,4 @@ C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\icon_storage.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_base.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\minecraftianx12.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.csproj.AssemblyReference.cache

@@ -207,5 +207,36 @@ namespace TriangleGame.Manager
 
             return sum;
         }
+
+        public void Update(Point mousePoint)
+        {
+            foreach (var tower in _towers)
+            {
+                tower.HoverText.Update(mousePoint);
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (var ore in _ores)
+            {
+                ore.Draw(spriteBatch);
+            }
+
+            foreach (var area in _areas)
+            {
+                area.Draw(spriteBatch);
+            }
+
+            foreach (var tower in _towers)
+            {
+                tower.Draw(spriteBatch);
+            }
+
+            foreach (var tower in _towers)
+            {
+                tower.HoverText.Draw(spriteBatch);
+            }
+        }
     }
 }

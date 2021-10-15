@@ -26,15 +26,15 @@ namespace TriangleGame.Manager
         {
             TextureManager textureManager = TextureManager.Instance;
             _buttons.Add(new Button(textureManager.Sprites["buttonAttack"], textureManager.Sprites["buttonFrame"],
-                new Rectangle(new Point(10, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Attacker, true));
+                new Rectangle(new Point(10, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Attacker, "Angreifer", true));
             _buttons.Add(new Button(textureManager.Sprites["buttonCollector"], textureManager.Sprites["buttonFrame"],
                 new Rectangle(
                     new Point((10 * 2) + _buttonSize.X, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)),
-                    _buttonSize), TowerType.Collector));
+                    _buttonSize), TowerType.Collector, "Sammler"));
             _buttons.Add(new Button(textureManager.Sprites["buttonStorage"], textureManager.Sprites["buttonFrame"],
                 new Rectangle(
                     new Point((10 * 3) + (_buttonSize.X * 2),
-                        _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Storage));
+                        _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Storage, "Speicher"));
         }
 
         public TowerType SelectedTower()
@@ -71,14 +71,18 @@ namespace TriangleGame.Manager
             return interaction;
         }
         
-        public void Update(int metal, int gas, int crystals)
+        public void Update(int metal, int gas, int crystals, Point mousePoint)
         {
-            Update(new int[]{metal, gas, crystals });    
+            Update(new int[]{metal, gas, crystals }, mousePoint);    
         }
         
-        public void Update(int[] resource)
+        public void Update(int[] resource, Point mousePoint)
         {
             _info.Update(resource);
+            foreach (var button in _buttons)
+            {
+                button.Update(mousePoint);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -88,6 +92,11 @@ namespace TriangleGame.Manager
             foreach (var button in _buttons)
             {
                 button.Draw(spriteBatch);
+            }
+
+            foreach (var button in _buttons)
+            {
+                button.DrawHover(spriteBatch);
             }
         }
     }

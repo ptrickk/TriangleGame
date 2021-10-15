@@ -61,7 +61,8 @@ namespace TriangleGame
         protected override void Update(GameTime gameTime)
         {
             test++;
-            _uiManager.Update(test * 10, test * 100, test * 2);
+            _uiManager.Update(test * 10, test * 100, test * 2, Mouse.GetState().Position);
+            _towerManager.Update(Mouse.GetState().Position);
             
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -70,6 +71,8 @@ namespace TriangleGame
             if (!IsActive) return;
 
             _camera.Update();
+            
+            
             if (_camera.Position.Y + graphics.PreferredBackBufferHeight > _boundaries.Location.Y + _boundaries.Size.Y)
             {
                 _camera.Move(0,
@@ -139,22 +142,8 @@ namespace TriangleGame
 
             //MAP
             spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.Position, 0)));
-
-            foreach (var ore in _towerManager.Ores)
-            {
-                ore.Draw(spriteBatch);
-            }
-
-            foreach (var area in _towerManager.Areas)
-            {
-                area.Draw(spriteBatch);
-            }
-
-            foreach (var tower in _towerManager.Towers)
-            {
-                tower.Draw(spriteBatch);
-            }
-
+            
+            _towerManager.Draw(spriteBatch);
 
             spriteBatch.End();
 
@@ -168,6 +157,8 @@ namespace TriangleGame
                 Color.White);
             
             _uiManager.Draw(spriteBatch);
+            
+            //spriteBatch.Draw(_textureManager.Sprites["pixel"], new Rectangle(Mouse.GetState().Position, new Point( 20, 20)), Color.Red);
 
             spriteBatch.End();
 

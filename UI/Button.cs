@@ -13,8 +13,10 @@ namespace TriangleGame.UI
         private Rectangle _dimensions;
 
         private bool _selected;
+
+        private HoverText _hover;
         
-        public Button(Texture2D texture, Texture2D frame, Rectangle dimensions, TowerType towerType, bool selected = false)
+        public Button(Texture2D texture, Texture2D frame, Rectangle dimensions, TowerType towerType, string text, bool selected = false)
         {
             _texture = texture;
             _frame = frame;
@@ -22,6 +24,8 @@ namespace TriangleGame.UI
             _towerType = towerType;
             
             _selected = selected;
+
+            _hover = new HoverText(text, dimensions, Color.LimeGreen);
         }
 
         public bool Selected
@@ -49,14 +53,24 @@ namespace TriangleGame.UI
         {
             _selected = false;
         }
-        
-        public void Draw(SpriteBatch _spriteBatch)
+
+        public void Update(Point mousePoint)
         {
-            _spriteBatch.Draw(_texture, _dimensions, Color.White);
+            _hover.Update(mousePoint);
+        }
+        
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_texture, _dimensions, Color.White);
             if (_selected)
             {
-                _spriteBatch.Draw(_frame, _dimensions, Color.White);
+                spriteBatch.Draw(_frame, _dimensions, Color.White);
             }
+        }
+
+        public void DrawHover(SpriteBatch spriteBatch)
+        {
+            _hover.Draw(spriteBatch);
         }
     }
 }
