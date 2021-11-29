@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.MediaFoundation;
+using TriangleGame.Resources;
 
 namespace TriangleGame.Manager
 {
@@ -72,7 +73,38 @@ namespace TriangleGame.Manager
         {
             GenerateOres(area.Location, area.Location + area.Size, texture);
         }
-        
+
+        public List<Area> GetAreasOfTower(Tower tower)
+        {
+            List<Area> areas = new List<Area>();
+            foreach (var area in _areas)
+            {
+                if (area.Contains(tower))
+                {
+                    areas.Add(area);
+                }
+            }
+
+            return areas;
+        }
+
+        public List<Ore> GetUnoccupiedOresInArea(Area area)
+        {
+            List<Ore> ores = new List<Ore>();
+            foreach (var ore in _ores)
+            {
+                if (area.Contains(ore))
+                {
+                    if (!ore.Occupied)
+                    {
+                        ores.Add(ore);
+                    }
+                }
+            }
+
+            return ores;
+        }
+
         public void GenerateOres(Point start, Point end, Texture2D texture)
         {
             if (start.X > end.X || start.Y > end.Y)
@@ -87,18 +119,32 @@ namespace TriangleGame.Manager
                 {
                     if (rand.Next() % 750 == 0)
                     {
-                        _ores.Add(new Ore(new Point(i, j), new Point(6, 6), texture, Color.LimeGreen, 200));
+                        int res = rand.Next() % 3;
+                        ResourceType type = ResourceType.Metal;
+                        switch (res)
+                        {
+                            case 0:
+                                type = ResourceType.Metal; break;
+                            case 1:
+                                type = ResourceType.Gas; break;
+                            case 2:
+                                type = ResourceType.Crystals; break;
+                        }
+
+                        _ores.Add(new Ore(new Point(i, j), new Point(6, 6), type, texture,
+                            Color.LimeGreen, 200));
                     }
                 }
             }
         }
-        
+
         public void Connect(Tower t, bool startup = false)
         {
             bool invalid = false;
             int areas = 0;
 
-            foreach (var tower1 in _towers.Where(p => Vector2.Distance(t.Position.ToVector2(), p.Position.ToVector2()) < 180))
+            foreach (var tower1 in _towers.Where(p =>
+                Vector2.Distance(t.Position.ToVector2(), p.Position.ToVector2()) < 180))
             {
                 if (t == tower1) continue;
 
@@ -106,14 +152,14 @@ namespace TriangleGame.Manager
                 if (!(distance > 20) || !(distance < 180)) continue;
                 var c1 = new Connector(t, tower1);
                 bool intersect = false;
-                
+
                 foreach (var connector in _connectors.Where(connector => c1.Intersects(connector)))
                 {
                     intersect = true;
                 }
 
                 if (intersect) continue;
-                
+
                 _connectors.Add(c1);
                 var dist = _connectors[_connectors.Count - 1].Length;
 
@@ -174,6 +220,7 @@ namespace TriangleGame.Manager
                 RemoveConnections(t);
                 _towers.Remove(t);
             }
+
             if (invalid)
             {
                 RemoveConnections(t);
@@ -208,12 +255,36 @@ namespace TriangleGame.Manager
             return sum;
         }
 
-        public void Update(Point mousePoint)
+        public Dictionary<string, int> Update(Point mousePoint, bool interval)
         {
+            Dictionary<string, int> resource = new Dictionary<string, int>();
             foreach (var tower in _towers)
             {
                 tower.HoverText.Update(mousePoint);
+                KeyValuePair<string, int> temp = new KeyValuePair<string, int>("none", -1);
+                if (interval)
+                {
+                    Console.WriteLine("INT CHECK 1");
+                    temp = tower.Update();
+                    if (!temp.Key.Equals("none"))
+                    {
+                        Console.WriteLine("INT CHECK 2");
+
+                        string key = temp.Key;
+                        int amount = temp.Value;
+                        if (resource.ContainsKey(key))
+                        {
+                            resource[key] += amount;
+                        }
+                        else
+                        {
+                            resource.Add(key, amount);
+                        }
+                    }
+                }
             }
+
+            return resource;
         }
 
         public void Draw(SpriteBatch spriteBatch)

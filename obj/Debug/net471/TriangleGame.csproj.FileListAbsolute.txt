@@ -28,3 +28,7 @@ C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_base.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\minecraftianx12.xnb
 C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\obj\Debug\net471\TriangleGame.csproj.AssemblyReference.cache
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_collector_texture.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_collector_tint.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_storage_texture.xnb
+C:\Users\geert\RiderProjects\MonogameTest\TriangleGame\bin\Debug\net471\Content\tower_storage_tint.xnb

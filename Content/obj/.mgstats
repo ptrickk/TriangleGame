@@ -1,2 +1,5 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/minecraftianx12.spritefont","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/minecraftianx12.xnb","FontDescriptionProcessor","SpriteFontContent",2015,153981,0,8133015
+"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_collector_texture.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_collector_texture.xnb","TextureProcessor","Texture2DContent",2379,65621,0,2988573
+"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_collector_tint.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_collector_tint.xnb","TextureProcessor","Texture2DContent",1578,65621,0,0049663
+"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_storage_texture.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_storage_texture.xnb","TextureProcessor","Texture2DContent",2706,65621,0,0042952
+"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_storage_tint.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_storage_tint.xnb","TextureProcessor","Texture2DContent",660,65621,0,0064112

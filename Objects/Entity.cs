@@ -9,7 +9,7 @@ namespace TriangleGame
         protected Texture2D _texture2D;
         protected Color _color;
 
-        protected Point _dimensions = new Point(16, 16);
+        protected Point _dimensions = new Point(32, 32);
 
         public Entity(Point position, Texture2D texture2D, Color color)
         {

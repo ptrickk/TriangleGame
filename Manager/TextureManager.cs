@@ -43,6 +43,10 @@ namespace TriangleGame.Manager
             Sprites.Add("buttonCollector", Content.Load<Texture2D>("icon_collector"));
             Sprites.Add("buttonStorage", Content.Load<Texture2D>("icon_storage"));
             Sprites.Add("buttonFrame", Content.Load<Texture2D>("button_frame"));
+            Sprites.Add("towerStorageTex", Content.Load<Texture2D>("tower_storage_texture"));
+            Sprites.Add("towerStorageTint", Content.Load<Texture2D>("tower_storage_tint"));
+            Sprites.Add("towerCollectorTex", Content.Load<Texture2D>("tower_collector_texture"));
+            Sprites.Add("towerCollectorTint", Content.Load<Texture2D>("tower_collector_tint"));
             
             Fonts.Add("basicfont", Content.Load<SpriteFont>("minecraftianx12"));
             

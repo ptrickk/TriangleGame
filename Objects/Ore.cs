@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TriangleGame.Resources;
 
@@ -6,10 +7,80 @@ namespace TriangleGame
 {
     public class Ore : Entity
     {
-        private Resource _resource;
-        public Ore(Point position, Point dimension, Texture2D texture2D, Color color, int amount):base(position, texture2D, color)
+        private ResourceType _resource;
+        private int _amount;
+        private bool _occupied;
+        
+        public Ore(Point position, Point dimension, ResourceType resource, Texture2D texture2D, Color color, int amount, bool occupied = false):base(position, texture2D, color)
         {
             Dimensions = dimension;
+            _amount = amount;
+            _occupied = occupied;
+            _resource = resource;
+
+            switch (resource)
+            {
+                case ResourceType.Crystals:
+                    _color = Color.Aqua;
+                    break;
+                case ResourceType.Gas:
+                    _color = Color.LimeGreen;
+                    break;
+                case ResourceType.Metal:
+                    _color = Color.Silver;
+                    break;
+            }
+        }
+
+        public ResourceType Resource
+        {
+            get => _resource;
+        }
+
+        public string ResourceToString()
+        {
+            if (_resource == ResourceType.Metal) return "metal";
+            else if (_resource == ResourceType.Gas) return "gas";
+            else if (_resource == ResourceType.Crystals) return "crystal";
+            else return "error";
+        }
+        
+        public bool Occupied
+        {
+            get => _occupied;
+        }
+
+        public bool SetAsOccupied()
+        {
+            if (_occupied)
+            {
+                return false;
+            }
+            else
+            {
+                _occupied = true;
+                return true;
+            }
+        }
+        
+        public int Mine()
+        {
+            int material = 0;
+            if (_occupied)
+            {
+                if (_amount < 10)
+                {
+                    material = _amount;
+                    _amount = 0;
+                }
+                else
+                {
+                    _amount -= 10;
+                    material = 10;
+                }
+                Console.WriteLine("MINED ORE");
+            }
+            return material;
         }
     }
 }

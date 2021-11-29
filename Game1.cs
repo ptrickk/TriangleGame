@@ -10,11 +10,13 @@ namespace TriangleGame
 {
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public GraphicsDeviceManager graphics;
+        public SpriteBatch spriteBatch;
 
         private TowerManager _towerManager;
         private TextureManager _textureManager;
+        private GameManager _gameManager;
+        
         private UIManager _uiManager;
 
         private Camera _camera;
@@ -36,14 +38,18 @@ namespace TriangleGame
             base.Initialize();
             
             
-            _boundaries = new Rectangle(0, 0, 2000, 2000);
+            /*_boundaries = new Rectangle(0, 0, 2000, 2000);
             _camera = new Camera(_boundaries.Center.ToVector2(), 2);
 
             _towerManager = new TowerManager();
             _towerManager.GenerateOres(_boundaries, _textureManager.Sprites["pixel"]);
 
             _uiManager = new UIManager(graphics, new Point(64, 64));
-            _uiManager.Initialize();
+            _uiManager.Initialize();*/
+
+            _gameManager = new GameManager(this);
+            _gameManager.Initialize();
+            _gameManager.StartGame();
         }
 
         protected override void LoadContent()
@@ -60,7 +66,8 @@ namespace TriangleGame
 
         protected override void Update(GameTime gameTime)
         {
-            test++;
+            _gameManager.Update(gameTime);
+            /*test++;
             _uiManager.Update(test * 10, test * 100, test * 2, Mouse.GetState().Position);
             _towerManager.Update(Mouse.GetState().Position);
             
@@ -131,7 +138,7 @@ namespace TriangleGame
                 
             }
 
-            lastState = Mouse.GetState().LeftButton;
+            lastState = Mouse.GetState().LeftButton;*/
 
             base.Update(gameTime);
         }
@@ -139,8 +146,9 @@ namespace TriangleGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(218, 105, 50, 255));
-
-            //MAP
+            
+            _gameManager.Draw(spriteBatch);
+            /*//MAP
             spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.Position, 0)));
             
             _towerManager.Draw(spriteBatch);
@@ -160,7 +168,7 @@ namespace TriangleGame
             
             //spriteBatch.Draw(_textureManager.Sprites["pixel"], new Rectangle(Mouse.GetState().Position, new Point( 20, 20)), Color.Red);
 
-            spriteBatch.End();
+            spriteBatch.End();*/
 
             base.Draw(gameTime);
         }
