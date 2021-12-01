@@ -100,7 +100,8 @@ namespace TriangleGame
                     return false;
                 }
 
-                return true;
+                return IsIntersecting(_towerA.Position, _towerB.Position, connector._towerA.Position,
+                                           connector._towerB.Position);
             }
         }
 
@@ -123,6 +124,21 @@ namespace TriangleGame
             var origin = new Vector2(0f, 0.5f);
             var scale = new Vector2(length, thickness);
             spriteBatch.Draw(_texture, point, null, color, angle, origin, scale, SpriteEffects.None, 0);
+        }
+        
+        private bool IsIntersecting(Point a, Point b, Point c, Point d)
+        {
+            float denominator = ((b.X - a.X) * (d.Y - c.Y)) - ((b.Y - a.Y) * (d.X - c.X));
+            float numerator1 = ((a.Y - c.Y) * (d.X - c.X)) - ((a.X - c.X) * (d.Y - c.Y));
+            float numerator2 = ((a.Y - c.Y) * (b.X - a.X)) - ((a.X - c.X) * (b.Y - a.Y));
+
+            // Detect coincident lines (has a problem, read below)
+            if (denominator == 0) return numerator1 == 0 && numerator2 == 0;
+
+            float r = numerator1 / denominator;
+            float s = numerator2 / denominator;
+
+            return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
         }
     }
 }

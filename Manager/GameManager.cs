@@ -183,13 +183,6 @@ namespace TriangleGame.Manager
 
                         if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
                         {
-                            if (type != TowerType.Base)
-                            {
-                                _resources["metal"].IncreaseAmount(-price[0]);
-                                _resources["gas"].IncreaseAmount(-price[1]);
-                                _resources["crystal"].IncreaseAmount(-price[2]);
-                            }
-
                             if (_towerManager.Towers.Count < 3)
                             {
                                 _towerManager.Connect(newTower, true);
@@ -199,11 +192,18 @@ namespace TriangleGame.Manager
                                 _towerManager.Connect(newTower);
                             }
 
-                            if (newTower.Type == TowerType.Storage)
+                            if (type != TowerType.Base && _towerManager.Towers.Contains(newTower))
                             {
-                                _resources["metal"].IncreaseMaxAmount(200);
-                                _resources["gas"].IncreaseMaxAmount(200);
-                                _resources["crystal"].IncreaseMaxAmount(200);
+                                _resources["metal"].IncreaseAmount(-price[0]);
+                                _resources["gas"].IncreaseAmount(-price[1]);
+                                _resources["crystal"].IncreaseAmount(-price[2]);
+
+                                if (newTower.Type == TowerType.Storage)
+                                {
+                                    _resources["metal"].IncreaseMaxAmount(200);
+                                    _resources["gas"].IncreaseMaxAmount(200);
+                                    _resources["crystal"].IncreaseMaxAmount(200);
+                                }
                             }
                         }
                     }

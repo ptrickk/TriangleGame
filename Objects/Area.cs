@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -57,6 +58,23 @@ namespace TriangleGame
             }
 
             return false;
+        }
+
+        public Tower[] GetTowers()
+        {
+            Tower a = _connectors[0].TowerA;
+            Tower b = _connectors[0].TowerB;
+            Tower c = null;
+            if (_connectors[1].TowerA != a && _connectors[1].TowerA != b)
+            {
+                c = _connectors[1].TowerA;
+            }
+            else
+            {
+                c = _connectors[1].TowerB;
+            }
+
+            return new[] { a, b, c };
         }
     }
 }

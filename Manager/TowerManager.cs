@@ -137,11 +137,14 @@ namespace TriangleGame.Manager
                         switch (res)
                         {
                             case 0:
-                                type = ResourceType.Metal; break;
+                                type = ResourceType.Metal;
+                                break;
                             case 1:
-                                type = ResourceType.Gas; break;
+                                type = ResourceType.Gas;
+                                break;
                             case 2:
-                                type = ResourceType.Crystals; break;
+                                type = ResourceType.Crystals;
+                                break;
                         }
 
                         _ores.Add(new Ore(new Point(i, j), new Point(6, 6), type, texture,
@@ -171,7 +174,11 @@ namespace TriangleGame.Manager
                     intersect = true;
                 }
 
-                if (intersect) continue;
+                if (intersect)
+                {
+                    Console.WriteLine("INTERSECTION CONTINUE");
+                    continue;
+                }
 
                 _connectors.Add(c1);
                 var dist = _connectors[_connectors.Count - 1].Length;
@@ -209,19 +216,21 @@ namespace TriangleGame.Manager
                                 //Check das alle drei Tower unique sind
                                 if ((!t3.Equals(c3.TowerA) || !t2.Equals(c3.TowerB)) &&
                                     (!t3.Equals(c3.TowerB) || !t2.Equals(c3.TowerA))) continue;
+                                
+                                Vector2 a = t1.Position.ToVector2() - t2.Position.ToVector2();
+                                Vector2 b = t3.Position.ToVector2() - t2.Position.ToVector2();
+                                a.Normalize();
+                                b.Normalize();
 
+                                float ab = Vector2.Dot(a, b);
 
-                                /*Sind winkel spitz genug 
-                                if (Angle(c1, c2, c3) <= 140 && Angle(c3, c1, c2) <= 140 &&
-                                    Angle(c2, c3, c1) <= 140)
-                                {}
-                                else
+                                if (ab >= -0.85f && ab <= 0.85f)
                                 {
-                                    invalid = true;
-                                }*/
-                                Area area = new Area(c1, c2, c3);
-                                _areas.Add(area);
-                                areas++;
+                                    Area area = new Area(c1, c2, c3);
+                                    
+                                    _areas.Add(area);
+                                    areas++;
+                                }
                             }
                         }
                     }
@@ -303,7 +312,7 @@ namespace TriangleGame.Manager
             {
                 ore.Draw(spriteBatch);
             }
-            
+
             foreach (var ore in _ores)
             {
                 ore.HoverText.Draw(spriteBatch);

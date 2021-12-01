@@ -27,8 +27,6 @@ namespace TriangleGame.Manager
                 return instance;
             }
         }
-        
-        public bool Loaded = false;
         public Dictionary<string, Texture2D> Sprites { get; private set; } = new Dictionary<string, Texture2D>();
         public Dictionary<string, SpriteFont> Fonts { get; private set; } = new Dictionary<string, SpriteFont>();
 
@@ -49,8 +47,6 @@ namespace TriangleGame.Manager
             Sprites.Add("towerCollectorTint", Content.Load<Texture2D>("tower_collector_tint"));
             
             Fonts.Add("basicfont", Content.Load<SpriteFont>("minecraftianx12"));
-            
-            Loaded = true;
         }
     }
 }
