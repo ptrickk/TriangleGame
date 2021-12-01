@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TriangleGame.Resources;
+using TriangleGame.UI;
 
 namespace TriangleGame
 {
@@ -10,6 +11,8 @@ namespace TriangleGame
         private ResourceType _resource;
         private int _amount;
         private bool _occupied;
+
+        private HoverText _hover;
         
         public Ore(Point position, Point dimension, ResourceType resource, Texture2D texture2D, Color color, int amount, bool occupied = false):base(position, texture2D, color)
         {
@@ -30,11 +33,23 @@ namespace TriangleGame
                     _color = Color.Silver;
                     break;
             }
+            
+            _hover = new HoverText(resource.ToString() + ":", new Rectangle(_position, _dimensions), Color.LimeGreen);
         }
 
         public ResourceType Resource
         {
             get => _resource;
+        }
+        
+        public HoverText HoverText
+        {
+            get => _hover;
+        }
+
+        public int Amount
+        {
+            get => _amount;
         }
 
         public string ResourceToString()
@@ -68,17 +83,17 @@ namespace TriangleGame
             int material = 0;
             if (_occupied)
             {
-                if (_amount < 10)
+                if (_amount <= 10)
                 {
                     material = _amount;
                     _amount = 0;
+                    _occupied = false;
                 }
                 else
                 {
                     _amount -= 10;
                     material = 10;
                 }
-                Console.WriteLine("MINED ORE");
             }
             return material;
         }

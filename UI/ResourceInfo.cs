@@ -9,6 +9,7 @@ namespace TriangleGame.UI
         private Point _position;
         private int _padding;
         private int[] _value = new int[3];
+        private int[] _max = new int[3];
 
         public ResourceInfo(Point position, int padding)
         {
@@ -16,9 +17,10 @@ namespace TriangleGame.UI
             _padding = padding;
         }
 
-        public void Update(int[] resource)
+        public void Update(int[] resource, int[] maxAmounts)
         {
             _value = resource;
+            _max = maxAmounts;
         }
         
         
@@ -43,7 +45,7 @@ namespace TriangleGame.UI
                     case 2: name = "Crystals: ";
                         break;
                 }
-                info[i] = name + _value[i];
+                info[i] = name + _value[i] + " / " + _max[i];
                 if (font.MeasureString(info[i]).X > maxLength) maxLength = (int) font.MeasureString(info[i]).X;
             }
 

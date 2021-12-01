@@ -14,19 +14,20 @@ namespace TriangleGame.Manager
         private TowerManager _towerManager;
         private UIManager _uiManager;
         private Game1 _game1;
-        
+
         //Camera controls
         private Camera _camera;
         private Rectangle _boundaries;
 
         private ButtonState _lastState = ButtonState.Released;
-        
+
         private Dictionary<string, Resource> _resources;
 
         private GraphicsDeviceManager _graphics;
 
-        private int _lastIntervall = 0;
-        
+        private double _lastInterval = 0;
+        private double _intervalSpeed = 2;
+
         public GameManager(Game1 game1)
         {
             _resources = new Dictionary<string, Resource>();
@@ -35,7 +36,7 @@ namespace TriangleGame.Manager
 
         public void StartGame()
         {
-            _lastIntervall = 0;
+            _lastInterval = 0;
         }
 
         public void AssignCollector(Tower collector)
@@ -52,7 +53,6 @@ namespace TriangleGame.Manager
                 if (!ore.Occupied)
                 {
                     collector.Occupie(ore);
-                    Console.WriteLine("succesfull occupation!!!");
                     return;
                 }
             }
@@ -72,10 +72,10 @@ namespace TriangleGame.Manager
         public void Initialize()
         {
             Texture2D resourceTexture = TextureManager.Instance.Sprites["pixel"];
-            _resources.Add("metal", new Resource(resourceTexture, ResourceType.Metal, 100));
-            _resources.Add("gas", new Resource(resourceTexture, ResourceType.Gas, 100));
-            _resources.Add("crystal",new Resource(resourceTexture, ResourceType.Crystals, 100));
-            
+            _resources.Add("metal", new Resource(resourceTexture, ResourceType.Metal, 500, 500));
+            _resources.Add("gas", new Resource(resourceTexture, ResourceType.Gas, 500, 500));
+            _resources.Add("crystal", new Resource(resourceTexture, ResourceType.Crystals, 500, 500));
+
             _boundaries = new Rectangle(0, 0, 2000, 2000);
             _camera = new Camera(_boundaries.Center.ToVector2(), 2);
 
@@ -88,18 +88,20 @@ namespace TriangleGame.Manager
 
         public void Update(GameTime gameTime)
         {
-            bool intervall = false;
-            int seconds = gameTime.TotalGameTime.Seconds;
-            if (seconds - _lastIntervall > 2)
+            bool interval = false;
+            var seconds = gameTime.TotalGameTime.TotalSeconds;
+            if (seconds - _lastInterval > _intervalSpeed)
             {
-                Console.WriteLine("INTERVALL");
-                intervall = true;
-                _lastIntervall = seconds;
+                Console.WriteLine("INTERVAL: " + seconds);
+                interval = true;
+                _lastInterval = seconds;
             }
-            
-            _uiManager.Update(_resources["metal"].Amount, _resources["gas"].Amount, _resources["crystal"].Amount, Mouse.GetState().Position);
-            AddRessources(_towerManager.Update(Mouse.GetState().Position, intervall));
-            
+
+            _uiManager.Update(_resources["metal"].Amount, _resources["gas"].Amount, _resources["crystal"].Amount,
+                _resources["metal"].Maximum, _resources["gas"].Maximum, _resources["crystal"].Maximum,
+                Mouse.GetState().Position);
+            AddRessources(_towerManager.Update(Mouse.GetState().Position, interval));
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 _game1.Exit();
@@ -107,9 +109,10 @@ namespace TriangleGame.Manager
             if (!_game1.IsActive) return;
 
             _camera.Update();
-            
-            
-            if (_camera.Position.Y + _game1.graphics.PreferredBackBufferHeight > _boundaries.Location.Y + _boundaries.Size.Y)
+
+
+            if (_camera.Position.Y + _game1.graphics.PreferredBackBufferHeight >
+                _boundaries.Location.Y + _boundaries.Size.Y)
             {
                 _camera.Move(0,
                     _boundaries.Location.Y + _boundaries.Size.Y -
@@ -140,38 +143,91 @@ namespace TriangleGame.Manager
             {
                 if (!_uiManager.UiInteraction(Mouse.GetState().Position))
                 {
+                    bool allowed = false;
                     Vector2 position = Mouse.GetState().Position.ToVector2() + _camera.Position;
                     TowerType type = _uiManager.SelectedTower();
-                    
+
                     if (_towerManager.Towers.Count == 0)
                     {
                         type = TowerType.Base;
+                        allowed = true;
                     }
 
-                    Tower newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
-                        TextureManager.Instance.Sprites["outerTower"], Color.Red, type);
-
-                    if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
+                    int[] price = new int[3];
+                    if (type != TowerType.Base) //Base hat keinen Preis
                     {
-                        if (_towerManager.Towers.Count < 3)
+                        switch (type)
                         {
-                            _towerManager.Connect(newTower, true);
-                        }
-                        else
-                        {
-                            _towerManager.Connect(newTower);
+                            case TowerType.Attacker:
+                                price = new[] { 150, 200, 200 };
+                                break;
+                            case TowerType.Collector:
+                                price = new[] { 50, 200, 200 };
+                                break;
+                            case TowerType.Storage:
+                                price = new[] { 300, 50, 50 };
+                                break;
                         }
 
-                        if (newTower.Type == TowerType.Collector)
+                        if (_resources["metal"].Amount >= price[0] && _resources["gas"].Amount >= price[1] &&
+                            _resources["crystal"].Amount >= price[2])
                         {
-                            Console.WriteLine("started assign process");
-                            AssignCollector(newTower);
-                            Console.WriteLine("ended assign process");
+                            allowed = true;
+                        }
+                    }
+
+                    if (allowed)
+                    {
+                        Tower newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
+                            TextureManager.Instance.Sprites["outerTower"], Color.Red, type);
+
+                        if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
+                        {
+                            if (type != TowerType.Base)
+                            {
+                                _resources["metal"].IncreaseAmount(-price[0]);
+                                _resources["gas"].IncreaseAmount(-price[1]);
+                                _resources["crystal"].IncreaseAmount(-price[2]);
+                            }
+
+                            if (_towerManager.Towers.Count < 3)
+                            {
+                                _towerManager.Connect(newTower, true);
+                            }
+                            else
+                            {
+                                _towerManager.Connect(newTower);
+                            }
+
+                            if (newTower.Type == TowerType.Storage)
+                            {
+                                _resources["metal"].IncreaseMaxAmount(200);
+                                _resources["gas"].IncreaseMaxAmount(200);
+                                _resources["crystal"].IncreaseMaxAmount(200);
+                            }
                         }
                     }
                 }
-                
-                
+            }
+
+            if (interval)
+            {
+                foreach (var tower in _towerManager.Towers)
+                {
+                    if (tower.Type == TowerType.Collector && tower.Occupied == null)
+                    {
+                        Console.WriteLine("NEW ASSIGNE");
+                        AssignCollector(tower);
+                    }
+                }
+
+                for (int i = _towerManager.Ores.Count - 1; i >= 0; i--)
+                {
+                    if (_towerManager.Ores[i].Amount < 1)
+                    {
+                        _towerManager.Ores.Remove(_towerManager.Ores[i]);
+                    }
+                }
             }
 
             _lastState = Mouse.GetState().LeftButton;
@@ -181,7 +237,7 @@ namespace TriangleGame.Manager
         {
             //MAP
             spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.Position, 0)));
-            
+
             _towerManager.Draw(spriteBatch);
 
             spriteBatch.End();
@@ -194,9 +250,9 @@ namespace TriangleGame.Manager
             spriteBatch.DrawString(TextureManager.Instance.Fonts["basicfont"],
                 "Camera Position: " + _camera.Position.ToString(), new Vector2(10, 25),
                 Color.White);*/
-            
+
             _uiManager.Draw(spriteBatch);
-            
+
             //spriteBatch.Draw(_textureManager.Sprites["pixel"], new Rectangle(Mouse.GetState().Position, new Point( 20, 20)), Color.Red);
 
             spriteBatch.End();

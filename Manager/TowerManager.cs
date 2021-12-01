@@ -58,7 +58,20 @@ namespace TriangleGame.Manager
                 }
             }
 
-            if (valid)
+            bool check = false;
+            foreach (var t in _towers)
+            {
+                float distance = Vector2.Distance(t.Position.ToVector2(), tower.Position.ToVector2());
+
+                if (distance > 20 && distance < 180)
+                {
+                    check = true;
+                }
+            }
+
+            if (_towers.Count == 0) check = true;
+
+            if (valid && check)
             {
                 _towers.Add(tower);
                 return true;
@@ -264,12 +277,9 @@ namespace TriangleGame.Manager
                 KeyValuePair<string, int> temp = new KeyValuePair<string, int>("none", -1);
                 if (interval)
                 {
-                    Console.WriteLine("INT CHECK 1");
                     temp = tower.Update();
                     if (!temp.Key.Equals("none"))
                     {
-                        Console.WriteLine("INT CHECK 2");
-
                         string key = temp.Key;
                         int amount = temp.Value;
                         if (resource.ContainsKey(key))
@@ -292,6 +302,11 @@ namespace TriangleGame.Manager
             foreach (var ore in _ores)
             {
                 ore.Draw(spriteBatch);
+            }
+            
+            foreach (var ore in _ores)
+            {
+                ore.HoverText.Draw(spriteBatch);
             }
 
             foreach (var area in _areas)

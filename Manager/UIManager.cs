@@ -26,15 +26,15 @@ namespace TriangleGame.Manager
         {
             TextureManager textureManager = TextureManager.Instance;
             _buttons.Add(new Button(textureManager.Sprites["buttonAttack"], textureManager.Sprites["buttonFrame"],
-                new Rectangle(new Point(10, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Attacker, "Angreifer", true));
+                new Rectangle(new Point(10, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Attacker, "Angreifer (150/200/200)", true));
             _buttons.Add(new Button(textureManager.Sprites["buttonCollector"], textureManager.Sprites["buttonFrame"],
                 new Rectangle(
                     new Point((10 * 2) + _buttonSize.X, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)),
-                    _buttonSize), TowerType.Collector, "Sammler"));
+                    _buttonSize), TowerType.Collector, "Sammler (50/200/200)"));
             _buttons.Add(new Button(textureManager.Sprites["buttonStorage"], textureManager.Sprites["buttonFrame"],
                 new Rectangle(
                     new Point((10 * 3) + (_buttonSize.X * 2),
-                        _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Storage, "Speicher"));
+                        _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Storage, "Speicher (300/50/50)"));
         }
 
         public TowerType SelectedTower()
@@ -71,14 +71,14 @@ namespace TriangleGame.Manager
             return interaction;
         }
         
-        public void Update(int metal, int gas, int crystals, Point mousePoint)
+        public void Update(int metal, int gas, int crystals, int maxMetal, int maxGas, int maxCrystals, Point mousePoint)
         {
-            Update(new int[]{metal, gas, crystals }, mousePoint);    
+            Update(new int[]{metal, gas, crystals }, new int[]{ maxMetal, maxGas, maxCrystals },mousePoint);    
         }
         
-        public void Update(int[] resource, Point mousePoint)
+        public void Update(int[] resource, int[] maxAmounts, Point mousePoint)
         {
-            _info.Update(resource);
+            _info.Update(resource, maxAmounts);
             foreach (var button in _buttons)
             {
                 button.Update(mousePoint);

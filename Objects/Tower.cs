@@ -65,7 +65,7 @@ namespace TriangleGame
         {
             get => _hover;
         }
-
+        
         public KeyValuePair<string, int> Update()
         {
             KeyValuePair<string, int> body;
@@ -76,6 +76,11 @@ namespace TriangleGame
                 int amount = _occupied.Mine();
                 
                 body = new KeyValuePair<string, int>(key, amount);
+
+                if (!_occupied.Occupied)
+                {
+                    RemoveOccupied();
+                }
             }
             else
             {
@@ -113,6 +118,11 @@ namespace TriangleGame
         public void RemoveOccupied()
         {
             _occupied = null;
+        }
+
+        public Ore Occupied
+        {
+            get => _occupied;
         }
     }
 }

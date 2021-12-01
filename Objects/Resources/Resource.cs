@@ -21,6 +21,11 @@ namespace TriangleGame.Resources
         {
             get => _amount;
         }
+
+        public int Maximum
+        {
+            get => _maxAmount;
+        }
         
         public void IncreaseAmount(int amount)
         {
