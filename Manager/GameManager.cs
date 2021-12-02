@@ -39,7 +39,7 @@ namespace TriangleGame.Manager
             _lastInterval = 0;
         }
 
-        public void AssignCollector(Tower collector)
+        public void AssignCollector(CollectorTower collector)
         {
             List<Area> areas = _towerManager.GetAreasOfTower(collector);
             List<Ore> ores = new List<Ore>();
@@ -179,7 +179,35 @@ namespace TriangleGame.Manager
                     if (allowed)
                     {
                         Tower newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
-                            TextureManager.Instance.Sprites["outerTower"], Color.Red, type);
+                            TextureManager.Instance.Sprites["outerTower"], Color.Red);
+
+                        switch (type)
+                        {
+                            case TowerType.Attacker:
+                                newTower = new AttackTower(position.ToPoint(),
+                                    TextureManager.Instance.Sprites["innerTower"],
+                                    TextureManager.Instance.Sprites["outerTower"]);
+                                break;
+                            case TowerType.Collector:
+                                newTower = new CollectorTower(position.ToPoint(),
+                                    TextureManager.Instance.Sprites["towerCollectorTint"],
+                                    TextureManager.Instance.Sprites["towerCollectorTex"]);
+                                break;
+                            case TowerType.Storage:
+                                newTower = new StorageTower(position.ToPoint(),
+                                    TextureManager.Instance.Sprites["towerStorageTint"],
+                                    TextureManager.Instance.Sprites["towerStorageTex"]);
+                                break;
+                            case TowerType.Base:
+                                newTower = new BaseTower(position.ToPoint(),
+                                    TextureManager.Instance.Sprites["innerTower"],
+                                    TextureManager.Instance.Sprites["outerTower"]);
+                                break;
+                            default:
+                                newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
+                                    TextureManager.Instance.Sprites["outerTower"], Color.Red);
+                                break;
+                        }
 
                         if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
                         {
@@ -198,7 +226,7 @@ namespace TriangleGame.Manager
                                 _resources["gas"].IncreaseAmount(-price[1]);
                                 _resources["crystal"].IncreaseAmount(-price[2]);
 
-                                if (newTower.Type == TowerType.Storage)
+                                if (newTower.GetType() == typeof(StorageTower))
                                 {
                                     _resources["metal"].IncreaseMaxAmount(200);
                                     _resources["gas"].IncreaseMaxAmount(200);
@@ -214,10 +242,15 @@ namespace TriangleGame.Manager
             {
                 foreach (var tower in _towerManager.Towers)
                 {
-                    if (tower.Type == TowerType.Collector && tower.Occupied == null)
+                    
+                    if (tower.GetType() == typeof(CollectorTower))
                     {
-                        Console.WriteLine("NEW ASSIGNE");
-                        AssignCollector(tower);
+                        CollectorTower ctower = (CollectorTower)tower;
+                        if (ctower.Occupied == null)
+                        {
+                            Console.WriteLine("NEW ASSIGNE");
+                            AssignCollector(ctower);
+                        }
                     }
                 }
 

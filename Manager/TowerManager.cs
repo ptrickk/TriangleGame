@@ -216,7 +216,7 @@ namespace TriangleGame.Manager
                                 //Check das alle drei Tower unique sind
                                 if ((!t3.Equals(c3.TowerA) || !t2.Equals(c3.TowerB)) &&
                                     (!t3.Equals(c3.TowerB) || !t2.Equals(c3.TowerA))) continue;
-                                
+
                                 Vector2 a = t1.Position.ToVector2() - t2.Position.ToVector2();
                                 Vector2 b = t3.Position.ToVector2() - t2.Position.ToVector2();
                                 a.Normalize();
@@ -227,7 +227,7 @@ namespace TriangleGame.Manager
                                 if (ab >= -0.85f && ab <= 0.85f)
                                 {
                                     Area area = new Area(c1, c2, c3);
-                                    
+
                                     _areas.Add(area);
                                     areas++;
                                 }
@@ -286,18 +286,22 @@ namespace TriangleGame.Manager
                 KeyValuePair<string, int> temp = new KeyValuePair<string, int>("none", -1);
                 if (interval)
                 {
-                    temp = tower.Update();
-                    if (!temp.Key.Equals("none"))
+                    if (tower.GetType() == typeof(CollectorTower))
                     {
-                        string key = temp.Key;
-                        int amount = temp.Value;
-                        if (resource.ContainsKey(key))
+                        CollectorTower ctower = (CollectorTower)tower;
+                        temp = ctower.Update();
+                        if (!temp.Key.Equals("none"))
                         {
-                            resource[key] += amount;
-                        }
-                        else
-                        {
-                            resource.Add(key, amount);
+                            string key = temp.Key;
+                            int amount = temp.Value;
+                            if (resource.ContainsKey(key))
+                            {
+                                resource[key] += amount;
+                            }
+                            else
+                            {
+                                resource.Add(key, amount);
+                            }
                         }
                     }
                 }

@@ -9,64 +9,30 @@ namespace TriangleGame
 {
     public class Tower : Entity
     {
-        private TowerType _type;
-        private Texture2D _outerTexture;
+        //protected TowerType _type;
+        protected Texture2D _outerTexture;
 
-        private HoverText _hover;
+        protected HoverText _hover;
 
-        private Ore _occupied;
+        //protected Ore _occupied;
 
-        public Tower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color color, TowerType type):base(position, innerTexture, color)
+        public Tower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color color):base(position, innerTexture, color)
         {
-            _type = type;
             _outerTexture = outerTexture;
 
             string hoverText = "error";
             
             TextureManager textureManager = TextureManager.Instance;
-            
-            switch (type)
-            {
-                case TowerType.Default:
-                    _color = Color.White;
-                    break;
-                case TowerType.Attacker:
-                    _color = Color.Red;
-                    hoverText = "Angreifer";
-                    break;
-                case TowerType.Collector:
-                    _color = Color.Red;
-                    _texture2D = textureManager.Sprites["towerCollectorTint"];
-                    _outerTexture = textureManager.Sprites["towerCollectorTex"];
-                    hoverText = "Sammler";
-                    break;
-                case TowerType.Storage:
-                    _color = Color.Red;
-                    _texture2D = textureManager.Sprites["towerStorageTint"];
-                    _outerTexture = textureManager.Sprites["towerStorageTex"];
-                    hoverText = "Speicher";
-                    break;
-                case TowerType.Base:
-                    _color = Color.Black;
-                    hoverText = "Basis";
-                    Dimensions = new Point(32, 32);
-                    break;
-            }
 
             _hover = new HoverText(hoverText, new Rectangle(_position, _dimensions), Color.LimeGreen);
-        }
-
-        public TowerType Type
-        {
-            get => _type;
         }
 
         public HoverText HoverText
         {
             get => _hover;
         }
-        
-        public KeyValuePair<string, int> Update()
+
+        /*public KeyValuePair<string, int> Update()
         {
             KeyValuePair<string, int> body;
             if (_type == TowerType.Collector && _occupied != null)
@@ -88,6 +54,11 @@ namespace TriangleGame
             }
 
             return body;
+        }*/
+
+        public void Update()
+        {
+            
         }
 
         public new void Draw(SpriteBatch spriteBatch)
@@ -100,7 +71,7 @@ namespace TriangleGame
                 Color.White);
         }
 
-        public void Occupie(Ore ore)
+        /*public void Occupie(Ore ore)
         {
             if (_type == TowerType.Collector)
             {
@@ -123,6 +94,6 @@ namespace TriangleGame
         public Ore Occupied
         {
             get => _occupied;
-        }
+        }*/
     }
 }
