@@ -46,6 +46,7 @@ namespace TriangleGame.Manager
             foreach (var area in areas)
             {
                 ores.AddRange(_towerManager.GetUnoccupiedOresInArea(area));
+                if (ores.Count > 0) break;
             }
 
             foreach (var ore in ores)
@@ -185,8 +186,8 @@ namespace TriangleGame.Manager
                         {
                             case TowerType.Attacker:
                                 newTower = new AttackTower(position.ToPoint(),
-                                    TextureManager.Instance.Sprites["innerTower"],
-                                    TextureManager.Instance.Sprites["outerTower"]);
+                                    TextureManager.Instance.Sprites["towerAttackerTint"],
+                                    TextureManager.Instance.Sprites["towerAttackerTexture"]);
                                 break;
                             case TowerType.Collector:
                                 newTower = new CollectorTower(position.ToPoint(),

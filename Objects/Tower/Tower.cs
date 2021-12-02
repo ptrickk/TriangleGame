@@ -16,12 +16,13 @@ namespace TriangleGame
 
         //protected Ore _occupied;
 
-        public Tower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color color):base(position, innerTexture, color)
+        public Tower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color color) : base(position,
+            innerTexture, color)
         {
             _outerTexture = outerTexture;
 
             string hoverText = "error";
-            
+
             TextureManager textureManager = TextureManager.Instance;
 
             _hover = new HoverText(hoverText, new Rectangle(_position, _dimensions), Color.LimeGreen);
@@ -34,17 +35,17 @@ namespace TriangleGame
 
         public void Update()
         {
-            
         }
 
         public new void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(_outerTexture,
+                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                Color.White);
+
             spriteBatch.Draw(_texture2D,
                 new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
                 _color);
-            
-            spriteBatch.Draw(_outerTexture, new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
-                Color.White);
         }
     }
 }

@@ -106,13 +106,10 @@ namespace TriangleGame.Manager
             List<Ore> ores = new List<Ore>();
             foreach (var ore in _ores)
             {
-                if (area.Contains(ore))
-                {
-                    if (!ore.Occupied)
-                    {
-                        ores.Add(ore);
-                    }
-                }
+                if (!area.Contains(ore)) continue;
+                if (ore.Occupied) continue;
+                ores.Add(ore);
+                return ores;
             }
 
             return ores;
