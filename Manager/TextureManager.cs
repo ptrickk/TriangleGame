@@ -45,6 +45,8 @@ namespace TriangleGame.Manager
             Sprites.Add("towerStorageTint", Content.Load<Texture2D>("tower_storage_tint"));
             Sprites.Add("towerCollectorTex", Content.Load<Texture2D>("tower_collector_texture"));
             Sprites.Add("towerCollectorTint", Content.Load<Texture2D>("tower_collector_tint"));
+            Sprites.Add("towerAttackerTint", Content.Load<Texture2D>("tower_attack_tint"));
+            Sprites.Add("towerAttackerTexture", Content.Load<Texture2D>("tower_attack_texture"));
             
             Fonts.Add("basicfont", Content.Load<SpriteFont>("minecraftianx12"));
         }

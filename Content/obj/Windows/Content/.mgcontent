@@ -11,6 +11,8 @@
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/icon_storage.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/minecraftianx12.spritefont</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/pixel.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_attack_texture.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_attack_tint.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_base.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_collector_texture.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_collector_tint.png</File>
@@ -20,6 +22,8 @@
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_storage_tint.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
