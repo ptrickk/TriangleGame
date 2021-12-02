@@ -329,7 +329,14 @@ namespace TriangleGame.Manager
 
             foreach (var tower in _towers)
             {
-                tower.Draw(spriteBatch);
+                if (tower is CollectorTower collectorTower)
+                {
+                    collectorTower.Draw(spriteBatch);
+                }
+                else
+                {
+                    tower.Draw(spriteBatch);
+                }
             }
 
             foreach (var tower in _towers)

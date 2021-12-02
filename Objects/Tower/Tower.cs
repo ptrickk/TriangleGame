@@ -32,30 +32,6 @@ namespace TriangleGame
             get => _hover;
         }
 
-        /*public KeyValuePair<string, int> Update()
-        {
-            KeyValuePair<string, int> body;
-            if (_type == TowerType.Collector && _occupied != null)
-            {
-                
-                string key = _occupied.ResourceToString();
-                int amount = _occupied.Mine();
-                
-                body = new KeyValuePair<string, int>(key, amount);
-
-                if (!_occupied.Occupied)
-                {
-                    RemoveOccupied();
-                }
-            }
-            else
-            {
-                body = new KeyValuePair<string, int>("none", -1);
-            }
-
-            return body;
-        }*/
-
         public void Update()
         {
             
@@ -70,30 +46,5 @@ namespace TriangleGame
             spriteBatch.Draw(_outerTexture, new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
                 Color.White);
         }
-
-        /*public void Occupie(Ore ore)
-        {
-            if (_type == TowerType.Collector)
-            {
-                if (ore.SetAsOccupied())
-                {
-                    _occupied = ore;
-                }
-                else
-                {
-                    Console.WriteLine("ERROR: occupied ore can't be occupied!");
-                }
-            }
-        }
-
-        public void RemoveOccupied()
-        {
-            _occupied = null;
-        }
-
-        public Ore Occupied
-        {
-            get => _occupied;
-        }*/
     }
 }
