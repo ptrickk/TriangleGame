@@ -109,10 +109,10 @@ namespace TriangleGame.Manager
 
             if (!_game1.IsActive) return;
 
-            _camera.Update();
+            _camera.Update(_game1.graphics, _boundaries);
 
 
-            if (_camera.Position.Y + _game1.graphics.PreferredBackBufferHeight >
+            /*if (_camera.Position.Y + _game1.graphics.PreferredBackBufferHeight >
                 _boundaries.Location.Y + _boundaries.Size.Y)
             {
                 _camera.Move(0,
@@ -137,7 +137,7 @@ namespace TriangleGame.Manager
 
             if (_camera.Position.Y < _boundaries.Location.Y + _boundaries.Size.Y)
             {
-            }
+            }*/
 
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && _lastState == ButtonState.Released)

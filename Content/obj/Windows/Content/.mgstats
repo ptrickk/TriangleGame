@@ -1,4 +1,1 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_attack_texture.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/Windows/Content/tower_attack_texture.xnb","TextureProcessor","Texture2DContent",2274,65621,0,1755645
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_attack_tint.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/Windows/Content/tower_attack_tint.xnb","TextureProcessor","Texture2DContent",550,65621,0,0039767
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_storage_tint.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/Windows/Content/tower_storage_tint.xnb","TextureProcessor","Texture2DContent",281,65621,0,0064662

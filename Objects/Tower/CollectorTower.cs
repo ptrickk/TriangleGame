@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TriangleGame.Manager;
+using TriangleGame.Resources;
 using TriangleGame.UI;
 
 namespace TriangleGame
@@ -10,10 +11,12 @@ namespace TriangleGame
     public class CollectorTower : Tower
     {
         private Ore _occupied;
+        private ResourceType _preffered;
 
         public CollectorTower(Point position, Texture2D innerTexture, Texture2D outerTexture)
             : base(position, innerTexture, outerTexture, Color.Red)
         {
+            _preffered = ResourceType.None;
             _hover = new HoverText("Sammler", new Rectangle(_position, _dimensions), Color.LimeGreen);
         }
 

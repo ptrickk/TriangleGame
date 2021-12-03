@@ -5,24 +5,27 @@ namespace TriangleGame.UI
 {
     public class Button
     {
+        /// <summary>
+        /// The texture of the Button
+        /// </summary>
         private Texture2D _texture;
-        private Texture2D _frame;
+        /// <summary>
+        /// The frame that is displayed if the button is selected
+        /// </summary>
+        protected Texture2D _frame;
 
-        private TowerType _towerType;
+        protected Rectangle _dimensions;
 
-        private Rectangle _dimensions;
+        protected bool _selected;
 
-        private bool _selected;
-
-        private HoverText _hover;
+        protected HoverText _hover;
         
-        public Button(Texture2D texture, Texture2D frame, Rectangle dimensions, TowerType towerType, string text, bool selected = false)
+        public Button(Texture2D texture, Texture2D frame, Rectangle dimensions, string text, bool selected = false)
         {
             _texture = texture;
             _frame = frame;
             _dimensions = dimensions;
-            _towerType = towerType;
-            
+
             _selected = selected;
 
             _hover = new HoverText(text, dimensions, Color.LimeGreen);
@@ -33,11 +36,6 @@ namespace TriangleGame.UI
             get => _selected;
         }
 
-        public TowerType TowerType
-        {
-            get => _towerType;
-        }
-        
         public bool IsSelected(Point position)
         {
             if (_dimensions.Contains(position))

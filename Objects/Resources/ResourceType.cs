@@ -4,6 +4,7 @@
     {
         Crystals,
         Metal,
-        Gas
+        Gas,
+        None
     }
 }

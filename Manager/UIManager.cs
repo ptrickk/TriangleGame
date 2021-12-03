@@ -7,7 +7,7 @@ namespace TriangleGame.Manager
 {
     public class UIManager
     {
-        private List<Button> _buttons;
+        private List<TowerButton> _buttons;
         private ResourceInfo _info;
         
         private GraphicsDeviceManager _graphics;
@@ -15,7 +15,7 @@ namespace TriangleGame.Manager
 
         public UIManager(GraphicsDeviceManager graphics, Point buttonSize)
         {
-            _buttons = new List<Button>();
+            _buttons = new List<TowerButton>();
             _graphics = graphics;
             _buttonSize = buttonSize;
 
@@ -25,13 +25,13 @@ namespace TriangleGame.Manager
         public void Initialize()
         {
             TextureManager textureManager = TextureManager.Instance;
-            _buttons.Add(new Button(textureManager.Sprites["buttonAttack"], textureManager.Sprites["buttonFrame"],
+            _buttons.Add(new TowerButton(textureManager.Sprites["buttonAttack"], textureManager.Sprites["buttonFrame"],
                 new Rectangle(new Point(10, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Attacker, "Angreifer (150/200/200)", true));
-            _buttons.Add(new Button(textureManager.Sprites["buttonCollector"], textureManager.Sprites["buttonFrame"],
+            _buttons.Add(new TowerButton(textureManager.Sprites["buttonCollector"], textureManager.Sprites["buttonFrame"],
                 new Rectangle(
                     new Point((10 * 2) + _buttonSize.X, _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)),
                     _buttonSize), TowerType.Collector, "Sammler (50/200/200)"));
-            _buttons.Add(new Button(textureManager.Sprites["buttonStorage"], textureManager.Sprites["buttonFrame"],
+            _buttons.Add(new TowerButton(textureManager.Sprites["buttonStorage"], textureManager.Sprites["buttonFrame"],
                 new Rectangle(
                     new Point((10 * 3) + (_buttonSize.X * 2),
                         _graphics.PreferredBackBufferHeight - (10 + _buttonSize.Y)), _buttonSize), TowerType.Storage, "Speicher (300/50/50)"));
