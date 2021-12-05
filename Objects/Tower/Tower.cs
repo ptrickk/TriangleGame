@@ -21,11 +21,9 @@ namespace TriangleGame
         {
             _outerTexture = outerTexture;
 
-            string hoverText = "error";
+            string hoverText = "Klick";
 
-            TextureManager textureManager = TextureManager.Instance;
-
-            _hover = new HoverText(hoverText, new Rectangle(_position, _dimensions), Color.LimeGreen);
+            _hover = new HoverText(hoverText, new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions), Color.LimeGreen);
         }
 
         public HoverText HoverText

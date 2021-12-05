@@ -274,7 +274,7 @@ namespace TriangleGame.Manager
             return sum;
         }
 
-        public Dictionary<string, int> Update(Point mousePoint, bool interval)
+        public Dictionary<string, int> Update(Point mousePoint, bool interval, bool mousePressed = false)
         {
             Dictionary<string, int> resource = new Dictionary<string, int>();
             foreach (var tower in _towers)
@@ -286,7 +286,7 @@ namespace TriangleGame.Manager
                     if (tower.GetType() == typeof(CollectorTower))
                     {
                         CollectorTower ctower = (CollectorTower)tower;
-                        temp = ctower.Update();
+                        temp = ctower.Update(mousePoint, mousePressed);
                         if (!temp.Key.Equals("none"))
                         {
                             string key = temp.Key;

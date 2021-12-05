@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TriangleGame.UI
+namespace TriangleGame.UI.Buttons
 {
     public class Button
     {
@@ -40,6 +41,7 @@ namespace TriangleGame.UI
         {
             if (_dimensions.Contains(position))
             {
+                Console.WriteLine("BUTTON SELECTED");
                 _selected = true;
                 return true;
             }

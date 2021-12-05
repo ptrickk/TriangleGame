@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TriangleGame.UI;
+using TriangleGame.UI.Buttons;
 
 namespace TriangleGame.Manager
 {

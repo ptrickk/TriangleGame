@@ -12,16 +12,24 @@ namespace TriangleGame
     {
         private Ore _occupied;
         private ResourceType _preffered;
+        private CollectorUI _ui;
 
         public CollectorTower(Point position, Texture2D innerTexture, Texture2D outerTexture)
             : base(position, innerTexture, outerTexture, Color.Red)
         {
             _preffered = ResourceType.None;
-            _hover = new HoverText("Sammler", new Rectangle(_position, _dimensions), Color.LimeGreen);
+            _hover.Text = "Menü öffnen";
+            _ui = new CollectorUI(_position, ResourceType.None, new Rectangle(_position, _dimensions));
         }
 
-        public new KeyValuePair<string, int> Update()
+        public new KeyValuePair<string, int> Update(Point mousePoint, bool pressed = false)
         {
+            if (pressed)
+            {
+                //pressed is always false
+                Console.WriteLine("MOUSE PRESSED");
+                _ui.Update(mousePoint);
+            }
             KeyValuePair<string, int> body;
             if (_occupied != null)
             {
@@ -80,7 +88,7 @@ namespace TriangleGame
             spriteBatch.Draw(_outerTexture, new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
                 Color.White);
             
-            
+            _ui.Draw(spriteBatch);
         }
         
         private void DrawLine(SpriteBatch spriteBatch, Vector2 point1, Vector2 point2, Color color,

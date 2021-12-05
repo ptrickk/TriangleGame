@@ -9,7 +9,7 @@ namespace TriangleGame
         public BaseTower(Point position, Texture2D innerTexture, Texture2D outerTexture)
             : base(position, innerTexture, outerTexture, Color.Black)
         {
-            _hover = new HoverText("Base", new Rectangle(_position, _dimensions), Color.LimeGreen);
+            _hover.Text = "Base";
         }
     }
 }

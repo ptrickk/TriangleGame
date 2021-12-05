@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TriangleGame.UI
+namespace TriangleGame.UI.Buttons
 {
     public class TowerButton : Button
     {

@@ -14,6 +14,7 @@ namespace TriangleGame.Manager
         private TowerManager _towerManager;
         private UIManager _uiManager;
         private Game1 _game1;
+        private MouseInfo _mouse;
 
         //Camera controls
         private Camera _camera;
@@ -32,6 +33,7 @@ namespace TriangleGame.Manager
         {
             _resources = new Dictionary<string, Resource>();
             _game1 = game1;
+            _mouse = new MouseInfo();
         }
 
         public void StartGame()
@@ -89,6 +91,8 @@ namespace TriangleGame.Manager
 
         public void Update(GameTime gameTime)
         {
+            _mouse.Update();
+            
             bool interval = false;
             var seconds = gameTime.TotalGameTime.TotalSeconds;
             if (seconds - _lastInterval > _intervalSpeed)
@@ -101,7 +105,10 @@ namespace TriangleGame.Manager
             _uiManager.Update(_resources["metal"].Amount, _resources["gas"].Amount, _resources["crystal"].Amount,
                 _resources["metal"].Maximum, _resources["gas"].Maximum, _resources["crystal"].Maximum,
                 Mouse.GetState().Position);
-            AddRessources(_towerManager.Update(Mouse.GetState().Position, interval));
+
+            Vector3 mousePosition = Vector3.Transform(new Vector3(Mouse.GetState().Position.ToVector2(), 0),
+                Matrix.CreateTranslation(new Vector3(_camera.Position, 0)));
+            AddRessources(_towerManager.Update(new Vector2(mousePosition.X, mousePosition.Y).ToPoint(), interval));
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -111,41 +118,12 @@ namespace TriangleGame.Manager
 
             _camera.Update(_game1.graphics, _boundaries);
 
-
-            /*if (_camera.Position.Y + _game1.graphics.PreferredBackBufferHeight >
-                _boundaries.Location.Y + _boundaries.Size.Y)
-            {
-                _camera.Move(0,
-                    _boundaries.Location.Y + _boundaries.Size.Y -
-                    (_camera.Position.Y + _game1.graphics.PreferredBackBufferHeight));
-            }
-            else if (_camera.Position.Y < _boundaries.Location.Y)
-            {
-                _camera.Move(0, _boundaries.Location.Y - _camera.Position.Y);
-            }
-            else if (_camera.Position.X < _boundaries.Location.X)
-            {
-                _camera.Move(_boundaries.Location.X - _camera.Position.X, 0);
-            }
-            else if (_camera.Position.X + _game1.graphics.PreferredBackBufferWidth >
-                     _boundaries.Location.X + _boundaries.Size.X)
-            {
-                _camera.Move(
-                    _boundaries.Location.X + _boundaries.Size.X -
-                    (_camera.Position.X + _game1.graphics.PreferredBackBufferWidth), 0);
-            }
-
-            if (_camera.Position.Y < _boundaries.Location.Y + _boundaries.Size.Y)
-            {
-            }*/
-
-
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && _lastState == ButtonState.Released)
             {
                 if (!_uiManager.UiInteraction(Mouse.GetState().Position))
                 {
                     bool allowed = false;
-                    Vector2 position = Mouse.GetState().Position.ToVector2() + _camera.Position;
+                    Vector2 position = _mouse.Position.ToVector2() + _camera.Position;
                     TowerType type = _uiManager.SelectedTower();
 
                     if (_towerManager.Towers.Count == 0)
