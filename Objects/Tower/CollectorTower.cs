@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TriangleGame.GameObjects;
 using TriangleGame.Manager;
 using TriangleGame.Resources;
 using TriangleGame.UI;
@@ -83,7 +84,6 @@ namespace TriangleGame
             }
         }
 
-
         public void RemoveOccupied()
         {
             _occupied = null;
@@ -98,7 +98,7 @@ namespace TriangleGame
         {
             if (_occupied != null)
             {
-                DrawLine(spriteBatch, _position.ToVector2(), _occupied.Position.ToVector2(), Color.Purple);
+                DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], _position.ToVector2(), _occupied.Position.ToVector2(), Color.Purple);
             }
 
             spriteBatch.Draw(_texture2D,
@@ -110,23 +110,6 @@ namespace TriangleGame
                 Color.White);
 
             _ui.Draw(spriteBatch);
-        }
-
-        private void DrawLine(SpriteBatch spriteBatch, Vector2 point1, Vector2 point2, Color color,
-            float thickness = 1f)
-        {
-            var distance = Vector2.Distance(point1, point2);
-            var angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
-            DrawLine(spriteBatch, point1, distance, angle, color, thickness);
-        }
-
-        private void DrawLine(SpriteBatch spriteBatch, Vector2 point, float length, float angle, Color color,
-            float thickness = 1f)
-        {
-            Texture2D texture = TextureManager.Instance.Sprites["pixel"];
-            var origin = new Vector2(0f, 0.5f);
-            var scale = new Vector2(length, thickness);
-            spriteBatch.Draw(texture, point, null, color, angle, origin, scale, SpriteEffects.None, 0);
         }
     }
 }

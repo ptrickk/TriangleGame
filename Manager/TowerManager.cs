@@ -300,7 +300,8 @@ namespace TriangleGame.Manager
             Dictionary<string, int> resource = new Dictionary<string, int>();
             foreach (var tower in _towers)
             {
-                tower.HoverText.Update(mouse.RelativPosition);
+                tower.HealthBar.Active = tower.HoverText.Update(mouse.RelativPosition);
+                
                 if (tower is CollectorTower ctower)
                 {
                     ctower.UpdateUI(mouse);
@@ -359,6 +360,7 @@ namespace TriangleGame.Manager
 
             foreach (var tower in _towers)
             {
+                tower.HealthBar.Draw(spriteBatch);
                 tower.HoverText.Draw(spriteBatch);
             }
         }

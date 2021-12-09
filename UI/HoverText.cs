@@ -25,7 +25,7 @@ namespace TriangleGame.UI
             set => _text = value;
         }
 
-        public void Update(Point mousePoint)
+        public bool Update(Point mousePoint)
         {
             if (_dim.Contains(mousePoint))
             {
@@ -33,6 +33,8 @@ namespace TriangleGame.UI
                 _mousePosition = mousePoint;
             }
             else _active = false;
+
+            return _active;
         }
 
         public void Draw(SpriteBatch spriteBatch)

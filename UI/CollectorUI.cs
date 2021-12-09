@@ -22,11 +22,11 @@ namespace TriangleGame.UI
             TextureManager textureManager = TextureManager.Instance;
 
             _buttons.Add(new CollectorButton(textureManager.Sprites["iconMetal"], textureManager.Sprites["iconFrame"],
-                new Rectangle(position.X - 36, position.Y - 44, 24, 24), ResourceType.Metal, "Metal"));
+                new Rectangle(position.X - 36, position.Y + 24, 24, 24), ResourceType.Metal, "Metal"));
             _buttons.Add(new CollectorButton(textureManager.Sprites["iconGas"], textureManager.Sprites["iconFrame"],
-                new Rectangle(position.X - 12, position.Y - 44, 24, 24), ResourceType.Gas, "Gas"));
+                new Rectangle(position.X - 12, position.Y + 24, 24, 24), ResourceType.Gas, "Gas"));
             _buttons.Add(new CollectorButton(textureManager.Sprites["iconCrystal"], textureManager.Sprites["iconFrame"],
-                new Rectangle(position.X + 12, position.Y - 44, 24, 24), ResourceType.Crystals, "Crystal"));
+                new Rectangle(position.X + 12, position.Y + 24, 24, 24), ResourceType.Crystals, "Crystal"));
         }
 
         public bool Open
