@@ -12,12 +12,16 @@ namespace TriangleGame
     {
         private Ore _occupied;
         private ResourceType _prefered;
+        private bool _reassign = false;
+        
         private CollectorUI _ui;
 
         public CollectorTower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color teamColor)
             : base(position, innerTexture, outerTexture, teamColor)
         {
             _prefered = ResourceType.None;
+            _reassign = false;
+            
             _hover.Text = "Menü öffnen";
             _ui = new CollectorUI(_position, ResourceType.None, new Rectangle(new Point(_position.X - (_dimensions.X/2), _position.Y - (_dimensions.Y/2)), _dimensions));
         }
@@ -33,7 +37,14 @@ namespace TriangleGame
             {
                 Console.WriteLine("MOUSE PRESSED");
                 _ui.Update(mouse);
+                ResourceType prev = _prefered;
                 _prefered = _ui.Selected();
+
+                if (prev != _prefered && _occupied.Resource != _prefered)
+                {
+                    _occupied.Release();
+                    RemoveOccupied();
+                }
             }
         }
 

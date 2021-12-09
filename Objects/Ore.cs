@@ -34,7 +34,7 @@ namespace TriangleGame
                     break;
             }
             
-            _hover = new HoverText(resource.ToString() + ":", new Rectangle(_position, _dimensions), Color.LimeGreen);
+            _hover = new HoverText(resource.ToString() + ":", new Rectangle(new Point(_position.X - (_dimensions.X / 2), _position.Y - (_dimensions.Y / 2)), _dimensions), Color.LimeGreen);
         }
 
         public ResourceType Resource
@@ -65,6 +65,11 @@ namespace TriangleGame
             get => _occupied;
         }
 
+        public void Release()
+        {
+            _occupied = false;
+        }
+        
         public bool SetAsOccupied()
         {
             if (_occupied)
