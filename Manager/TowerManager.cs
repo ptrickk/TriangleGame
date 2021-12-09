@@ -18,6 +18,9 @@ namespace TriangleGame.Manager
 
         private int _storage;
 
+        private int _minDistance = 50;
+        private int _maxDistance = 240;
+
         public TowerManager()
         {
             _towers = new List<Tower>();
@@ -63,7 +66,7 @@ namespace TriangleGame.Manager
             {
                 float distance = Vector2.Distance(t.Position.ToVector2(), tower.Position.ToVector2());
 
-                if (distance > 20 && distance < 180)
+                if (distance > _minDistance && distance < _maxDistance)
                 {
                     check = true;
                 }
@@ -101,15 +104,23 @@ namespace TriangleGame.Manager
             return areas;
         }
 
-        public List<Ore> GetUnoccupiedOresInArea(Area area)
+        public List<Ore> GetUnoccupiedOresInArea(Area area, ResourceType preffered)
         {
             List<Ore> ores = new List<Ore>();
             foreach (var ore in _ores)
             {
                 if (!area.Contains(ore)) continue;
                 if (ore.Occupied) continue;
-                ores.Add(ore);
-                return ores;
+                if (preffered == ResourceType.None)
+                {
+                    ores.Add(ore);
+                    return ores;
+                }
+                if (ore.Resource == preffered)
+                {
+                    ores.Add(ore);
+                    return ores;
+                }
             }
 
             return ores;
@@ -162,7 +173,7 @@ namespace TriangleGame.Manager
                 if (t == tower1) continue;
 
                 float distance = Vector2.Distance(t.Position.ToVector2(), tower1.Position.ToVector2());
-                if (!(distance > 20) || !(distance < 180)) continue;
+                if (!(distance > _minDistance) || !(distance < _maxDistance)) continue;
                 var c1 = new Connector(t, tower1);
                 bool intersect = false;
 
@@ -274,19 +285,19 @@ namespace TriangleGame.Manager
             return sum;
         }
 
-        public Dictionary<string, int> Update(Point mousePoint, bool interval, bool mousePressed = false)
+        public Dictionary<string, int> Update(MouseInfo mouse, bool interval)
         {
             Dictionary<string, int> resource = new Dictionary<string, int>();
             foreach (var tower in _towers)
             {
-                tower.HoverText.Update(mousePoint);
-                KeyValuePair<string, int> temp = new KeyValuePair<string, int>("none", -1);
-                if (interval)
+                tower.HoverText.Update(mouse.RelativPosition);
+                if (tower is CollectorTower ctower)
                 {
-                    if (tower.GetType() == typeof(CollectorTower))
+                    ctower.UpdateUI(mouse);
+                    if (interval)
                     {
-                        CollectorTower ctower = (CollectorTower)tower;
-                        temp = ctower.Update(mousePoint, mousePressed);
+                        KeyValuePair<string, int> temp = new KeyValuePair<string, int>("none", -1);
+                        temp = ctower.Update();
                         if (!temp.Key.Equals("none"))
                         {
                             string key = temp.Key;

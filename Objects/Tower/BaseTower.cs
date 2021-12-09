@@ -6,8 +6,8 @@ namespace TriangleGame
 {
     public class BaseTower : Tower
     {
-        public BaseTower(Point position, Texture2D innerTexture, Texture2D outerTexture)
-            : base(position, innerTexture, outerTexture, Color.Black)
+        public BaseTower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color teamColor)
+            : base(position, innerTexture, outerTexture, teamColor)
         {
             _hover.Text = "Base";
         }

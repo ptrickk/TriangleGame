@@ -11,25 +11,34 @@ namespace TriangleGame
     public class CollectorTower : Tower
     {
         private Ore _occupied;
-        private ResourceType _preffered;
+        private ResourceType _prefered;
         private CollectorUI _ui;
 
-        public CollectorTower(Point position, Texture2D innerTexture, Texture2D outerTexture)
-            : base(position, innerTexture, outerTexture, Color.Red)
+        public CollectorTower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color teamColor)
+            : base(position, innerTexture, outerTexture, teamColor)
         {
-            _preffered = ResourceType.None;
+            _prefered = ResourceType.None;
             _hover.Text = "Menü öffnen";
-            _ui = new CollectorUI(_position, ResourceType.None, new Rectangle(_position, _dimensions));
+            _ui = new CollectorUI(_position, ResourceType.None, new Rectangle(new Point(_position.X - (_dimensions.X/2), _position.Y - (_dimensions.Y/2)), _dimensions));
         }
 
-        public new KeyValuePair<string, int> Update(Point mousePoint, bool pressed = false)
+        public ResourceType Prefered
         {
-            if (pressed)
+            get => _prefered;
+        }
+
+        public void UpdateUI(MouseInfo mouse)
+        {
+            if (mouse.LeftPressed)
             {
-                //pressed is always false
                 Console.WriteLine("MOUSE PRESSED");
-                _ui.Update(mousePoint);
+                _ui.Update(mouse);
+                _prefered = _ui.Selected();
             }
+        }
+
+        public new KeyValuePair<string, int> Update()
+        {
             KeyValuePair<string, int> body;
             if (_occupied != null)
             {
@@ -73,7 +82,7 @@ namespace TriangleGame
         {
             get => _occupied;
         }
-        
+
         public new void Draw(SpriteBatch spriteBatch)
         {
             if (_occupied != null)
@@ -84,13 +93,14 @@ namespace TriangleGame
             spriteBatch.Draw(_texture2D,
                 new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
                 _color);
-            
-            spriteBatch.Draw(_outerTexture, new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+
+            spriteBatch.Draw(_outerTexture,
+                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
                 Color.White);
-            
+
             _ui.Draw(spriteBatch);
         }
-        
+
         private void DrawLine(SpriteBatch spriteBatch, Vector2 point1, Vector2 point2, Color color,
             float thickness = 1f)
         {

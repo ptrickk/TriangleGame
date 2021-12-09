@@ -22,11 +22,11 @@ namespace TriangleGame.UI
             TextureManager textureManager = TextureManager.Instance;
 
             _buttons.Add(new CollectorButton(textureManager.Sprites["iconMetal"], textureManager.Sprites["iconFrame"],
-                new Rectangle(position.X - 24, position.Y - 36, 16, 16), ResourceType.Metal, "Metal"));
+                new Rectangle(position.X - 36, position.Y - 44, 24, 24), ResourceType.Metal, "Metal"));
             _buttons.Add(new CollectorButton(textureManager.Sprites["iconGas"], textureManager.Sprites["iconFrame"],
-                new Rectangle(position.X - 8, position.Y - 36, 16, 16), ResourceType.Metal, "Gas"));
+                new Rectangle(position.X - 12, position.Y - 44, 24, 24), ResourceType.Gas, "Gas"));
             _buttons.Add(new CollectorButton(textureManager.Sprites["iconCrystal"], textureManager.Sprites["iconFrame"],
-                new Rectangle(position.X + 8, position.Y - 36, 16, 16), ResourceType.Metal, "Crystal"));
+                new Rectangle(position.X + 12, position.Y - 44, 24, 24), ResourceType.Crystals, "Crystal"));
         }
 
         public bool Open
@@ -47,25 +47,40 @@ namespace TriangleGame.UI
             return ResourceType.None;
         }
 
-        public void Update(Point mousePosition)
+        private void ToggleButtons(CollectorButton selected)
         {
-            Console.WriteLine("CHECK");
-            if (open)
+            foreach (var button in _buttons)
             {
-                foreach (var button in _buttons)
+                if (!button.Equals(selected))
                 {
-                    button.Update(mousePosition);
-                    if (!button.IsSelected(mousePosition))
-                    {
-                        button.Deactivate();
-                    }
+                    button.Deactivate();
                 }
-
-                open = false;
             }
-            else if (_parent.Contains(mousePosition))
+        }
+
+        public void Update(MouseInfo mouse)
+        {
+            if (mouse.LeftPressed)
             {
-                open = true;
+                Console.WriteLine("CHECK");
+                if (open)
+                {
+                    Console.WriteLine("OPEN");
+                    foreach (var button in _buttons)
+                    {
+                        button.Update(mouse.RelativPosition);
+                        if (button.IsSelected(mouse.RelativPosition))
+                        {
+                            ToggleButtons(button);
+                        }
+                    }
+                    open = false;
+                }
+                else if (_parent.Contains(mouse.RelativPosition))
+                {
+                    Console.WriteLine("OPENED");
+                    open = true;
+                }
             }
         }
 
@@ -73,10 +88,10 @@ namespace TriangleGame.UI
         {
             if (open)
             {
-                foreach (var button in _buttons)
+                foreach (CollectorButton button in _buttons)
                 {
                     button.Draw(spriteBatch);
-                    button.DrawHover(spriteBatch);
+                    //button.DrawHover(spriteBatch);
                 }
             }
         }
