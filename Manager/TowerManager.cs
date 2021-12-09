@@ -66,9 +66,17 @@ namespace TriangleGame.Manager
             {
                 float distance = Vector2.Distance(t.Position.ToVector2(), tower.Position.ToVector2());
 
-                if (distance < _minDistance || distance > _maxDistance)
+                if (distance < _minDistance )//&& distance < _maxDistance
                 {
                     check = false;
+                }
+
+                if (_towers.Count < 2)
+                {
+                    if (distance < _minDistance || distance > _maxDistance)
+                    {
+                        check = false;
+                    }
                 }
             }
 
@@ -173,7 +181,9 @@ namespace TriangleGame.Manager
                 if (t == tower1) continue;
 
                 float distance = Vector2.Distance(t.Position.ToVector2(), tower1.Position.ToVector2());
-                if (!(distance > _minDistance) || !(distance < _maxDistance)) continue;
+                
+                if (distance < _minDistance || distance > _maxDistance) continue;
+                
                 var c1 = new Connector(t, tower1);
                 bool intersect = false;
 
