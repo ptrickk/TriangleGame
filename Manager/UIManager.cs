@@ -57,7 +57,11 @@ namespace TriangleGame.Manager
             bool interaction = false;
             foreach (var button in _buttons)
             {
-                if (button.IsSelected(mousePosition)) interaction = true;
+                if (button.IsSelected(mousePosition))
+                {
+                    interaction = true;
+                    TextureManager.Instance.Sounds["buttonPressed"].Play(0.5f, 0, 0);
+                }
             }
 
             if (interaction)

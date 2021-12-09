@@ -4,8 +4,10 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/attackShot.wav</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/basicfont.spritefont</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/button_frame.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/buttonPressed.wav</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/collector_selected_frame.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/icon_attack.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/icon_collector.png</File>
@@ -13,6 +15,7 @@
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/icon_gas.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/icon_metal.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/icon_storage.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/invalidAction.wav</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/minecraftianx12.spritefont</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/pixel.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_attack_texture.png</File>
@@ -24,8 +27,13 @@
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_outer.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_storage_texture.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_storage_tint.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/towerPlaced.wav</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

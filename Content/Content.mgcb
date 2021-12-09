@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin attackShot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:attackShot.wav
+
 #begin basicfont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -31,6 +37,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:button_frame.png
+
+#begin buttonPressed.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:buttonPressed.wav
 
 #begin collector_selected_frame.png
 /importer:TextureImporter
@@ -115,6 +127,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:icon_storage.png
+
+#begin invalidAction.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:invalidAction.wav
 
 #begin minecraftianx12.spritefont
 /importer:FontDescriptionImporter
@@ -242,4 +260,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:tower_storage_tint.png
+
+#begin towerPlaced.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:towerPlaced.wav
 

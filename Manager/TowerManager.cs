@@ -61,14 +61,14 @@ namespace TriangleGame.Manager
                 }
             }
 
-            bool check = false;
+            bool check = true;
             foreach (var t in _towers)
             {
                 float distance = Vector2.Distance(t.Position.ToVector2(), tower.Position.ToVector2());
 
-                if (distance > _minDistance && distance < _maxDistance)
+                if (distance < _minDistance || distance > _maxDistance)
                 {
-                    check = true;
+                    check = false;
                 }
             }
 
@@ -168,7 +168,7 @@ namespace TriangleGame.Manager
             int areas = 0;
 
             foreach (var tower1 in _towers.Where(p =>
-                Vector2.Distance(t.Position.ToVector2(), p.Position.ToVector2()) < 180))
+                Vector2.Distance(t.Position.ToVector2(), p.Position.ToVector2()) < _maxDistance))
             {
                 if (t == tower1) continue;
 

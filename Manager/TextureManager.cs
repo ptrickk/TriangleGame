@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace TriangleGame.Manager
@@ -29,6 +30,7 @@ namespace TriangleGame.Manager
         }
         public Dictionary<string, Texture2D> Sprites { get; private set; } = new Dictionary<string, Texture2D>();
         public Dictionary<string, SpriteFont> Fonts { get; private set; } = new Dictionary<string, SpriteFont>();
+        public Dictionary<string, SoundEffect> Sounds { get; private set; } = new Dictionary<string, SoundEffect>();
 
         public void LoadContent(ContentManager Content)
         {
@@ -53,6 +55,10 @@ namespace TriangleGame.Manager
             Sprites.Add("iconFrame", Content.Load<Texture2D>("collector_selected_frame"));
             
             Fonts.Add("basicfont", Content.Load<SpriteFont>("minecraftianx12"));
+            
+            Sounds.Add("buttonPressed", Content.Load<SoundEffect>("buttonPressed"));
+            Sounds.Add("invalidAction", Content.Load<SoundEffect>("invalidAction"));
+            Sounds.Add("towerPlaced", Content.Load<SoundEffect>("towerPlaced"));
         }
     }
 }
