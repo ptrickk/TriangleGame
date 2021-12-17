@@ -15,6 +15,7 @@ namespace TriangleGame
 
         
         private TextureManager _textureManager;
+        private SoundManager _soundManager;
         private GameManager _gameManager;
 
         public Game1()
@@ -37,8 +38,12 @@ namespace TriangleGame
         {
             _textureManager = TextureManager.Instance;
             _textureManager.LoadContent(Content);
+
+            _soundManager = SoundManager.Instance;
+            _soundManager.LoadContent(Content);
+            
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            var connector = new Connector(_textureManager.Sprites["pixel"]);
         }
 
         protected override void UnloadContent()

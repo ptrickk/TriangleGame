@@ -1,5 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/attackShot.wav","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/attackShot.xnb","SoundEffectProcessor","SoundEffectContent",21478,21539,1,095862
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/buttonPressed.wav","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/buttonPressed.xnb","SoundEffectProcessor","SoundEffectContent",8762,8823,0,8097354
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/invalidAction.wav","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/invalidAction.xnb","SoundEffectProcessor","SoundEffectContent",10964,11025,0,8155387
-"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/towerPlaced.wav","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/towerPlaced.xnb","SoundEffectProcessor","SoundEffectContent",17602,17663,0,8131293
+"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_base_texture.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_base_texture.xnb","TextureProcessor","Texture2DContent",3732,65621,0,3926646
+"C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_base_tint.png","C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/bin/tower_base_tint.xnb","TextureProcessor","Texture2DContent",835,65621,0,0056422

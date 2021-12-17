@@ -39,8 +39,8 @@ namespace TriangleGame.UI
                 Point end = new Point(_parent.Center.X + 25, _parent.Center.Y - _parent.Height);
                 DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], start.ToVector2(), end.ToVector2(), Color.Red, 3);
                 
-                int value = (_currentValue / _maxValue * 50) - 25;
-                end = new Point(_parent.Center.X + value , _parent.Center.Y - _parent.Height);
+                int value = (int) ((float)_currentValue / _maxValue * 50f) - 25;
+                end = new Point(_parent.Center.X + (int) value , _parent.Center.Y - _parent.Height);
                 DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], start.ToVector2(), end.ToVector2(), Color.Green, 3);
             }
         }

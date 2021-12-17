@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TriangleGame.GameObjects;
+using TriangleGame.Manager;
 
 namespace TriangleGame
 {
@@ -54,6 +55,11 @@ namespace TriangleGame
 
         public void Draw(SpriteBatch _spriteBatch)
         {
+            if (_texture == null)
+            {
+                _texture = TextureManager.Instance.Sprites["pixel"];
+            }
+            
             DrawFuntions.DrawLine(_spriteBatch, _texture, _towerA.Position.ToVector2(), _towerB.Position.ToVector2(), Color.White);
         }
 

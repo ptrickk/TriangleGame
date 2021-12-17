@@ -21,6 +21,8 @@
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_attack_texture.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_attack_tint.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_base.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_base_texture.png</File>
+    <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_base_tint.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_collector_texture.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_collector_tint.png</File>
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/tower_inner.png</File>
@@ -30,6 +32,8 @@
     <File>C:/Users/geert/RiderProjects/MonogameTest/TriangleGame/Content/towerPlaced.wav</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

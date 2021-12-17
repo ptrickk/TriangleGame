@@ -60,7 +60,7 @@ namespace TriangleGame.Manager
                 if (button.IsSelected(mousePosition))
                 {
                     interaction = true;
-                    TextureManager.Instance.Sounds["buttonPressed"].Play(0.5f, 0, 0);
+                    SoundManager.Instance.SetSound("buttonPressed", 0.5f);
                 }
             }
 

@@ -30,7 +30,6 @@ namespace TriangleGame.Manager
         }
         public Dictionary<string, Texture2D> Sprites { get; private set; } = new Dictionary<string, Texture2D>();
         public Dictionary<string, SpriteFont> Fonts { get; private set; } = new Dictionary<string, SpriteFont>();
-        public Dictionary<string, SoundEffect> Sounds { get; private set; } = new Dictionary<string, SoundEffect>();
 
         public void LoadContent(ContentManager Content)
         {
@@ -47,18 +46,16 @@ namespace TriangleGame.Manager
             Sprites.Add("towerStorageTint", Content.Load<Texture2D>("tower_storage_tint"));
             Sprites.Add("towerCollectorTex", Content.Load<Texture2D>("tower_collector_texture"));
             Sprites.Add("towerCollectorTint", Content.Load<Texture2D>("tower_collector_tint"));
+            Sprites.Add("towerAttackerTex", Content.Load<Texture2D>("tower_attack_texture"));
             Sprites.Add("towerAttackerTint", Content.Load<Texture2D>("tower_attack_tint"));
-            Sprites.Add("towerAttackerTexture", Content.Load<Texture2D>("tower_attack_texture"));
+            Sprites.Add("towerBaseTex", Content.Load<Texture2D>("tower_base_texture"));
+            Sprites.Add("towerBaseTint", Content.Load<Texture2D>("tower_base_tint"));
             Sprites.Add("iconMetal", Content.Load<Texture2D>("icon_metal"));
             Sprites.Add("iconGas", Content.Load<Texture2D>("icon_gas"));
             Sprites.Add("iconCrystal", Content.Load<Texture2D>("Icon_crystal"));
             Sprites.Add("iconFrame", Content.Load<Texture2D>("collector_selected_frame"));
             
             Fonts.Add("basicfont", Content.Load<SpriteFont>("minecraftianx12"));
-            
-            Sounds.Add("buttonPressed", Content.Load<SoundEffect>("buttonPressed"));
-            Sounds.Add("invalidAction", Content.Load<SoundEffect>("invalidAction"));
-            Sounds.Add("towerPlaced", Content.Load<SoundEffect>("towerPlaced"));
         }
     }
 }

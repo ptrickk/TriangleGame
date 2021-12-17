@@ -29,8 +29,11 @@ namespace TriangleGame.Manager
 
         private GraphicsDeviceManager _graphics;
 
-        private double _lastInterval = 0;
-        private double _intervalSpeed = 2;
+        private double _lastMiningInterval = 0;
+        private double _miningIntervalSpeed = 2;
+        
+        private double _lastWalInterval = 0;
+        private double _miningWalkSpeed = 0.5;
 
         public GameManager(Game1 game1)
         {
@@ -41,7 +44,8 @@ namespace TriangleGame.Manager
 
         public void StartGame()
         {
-            _lastInterval = 0;
+            _lastMiningInterval = 0;
+            _lastWalInterval = 0;
         }
 
         public void AssignCollector(CollectorTower collector)
@@ -95,14 +99,15 @@ namespace TriangleGame.Manager
         public void Update(GameTime gameTime)
         {
             _mouse.Update(_camera);
+            //Console.WriteLine("SCROLL: " + Mouse.GetState().ScrollWheelValue);
             
             bool interval = false;
             var seconds = gameTime.TotalGameTime.TotalSeconds;
-            if (seconds - _lastInterval > _intervalSpeed)
+            if (seconds - _lastMiningInterval > _miningIntervalSpeed)
             {
                 Console.WriteLine("INTERVAL: " + seconds);
                 interval = true;
-                _lastInterval = seconds;
+                _lastMiningInterval = seconds;
             }
 
             _uiManager.Update(_resources["metal"].Amount, _resources["gas"].Amount, _resources["crystal"].Amount,
@@ -111,7 +116,7 @@ namespace TriangleGame.Manager
 
             Vector3 mousePosition = Vector3.Transform(new Vector3(Mouse.GetState().Position.ToVector2(), 0),
                 Matrix.CreateTranslation(new Vector3(_camera.Position, 0)));
-            AddResources(_towerManager.Update(_mouse, interval));//new Vector2(mousePosition.X, mousePosition.Y).ToPoint()
+            AddResources(_towerManager.Update(_mouse, interval));
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -168,7 +173,7 @@ namespace TriangleGame.Manager
                             case TowerType.Attacker:
                                 newTower = new AttackTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerAttackerTint"],
-                                    TextureManager.Instance.Sprites["towerAttackerTexture"], teamColor);
+                                    TextureManager.Instance.Sprites["towerAttackerTex"], teamColor);
                                 break;
                             case TowerType.Collector:
                                 newTower = new CollectorTower(position.ToPoint(),
@@ -182,8 +187,8 @@ namespace TriangleGame.Manager
                                 break;
                             case TowerType.Base:
                                 newTower = new BaseTower(position.ToPoint(),
-                                    TextureManager.Instance.Sprites["innerTower"],
-                                    TextureManager.Instance.Sprites["outerTower"], teamColor);
+                                    TextureManager.Instance.Sprites["towerBaseTint"],
+                                    TextureManager.Instance.Sprites["towerBaseTex"], teamColor);
                                 break;
                             default:
                                 newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
@@ -218,12 +223,12 @@ namespace TriangleGame.Manager
                         }
                         else
                         {
-                            TextureManager.Instance.Sounds["invalidAction"].Play(0.1f, 0, 0);
+                            SoundManager.Instance.SetSound("invalidAction", 0.1f);
                         }
                     }
                     else
                     {
-                        TextureManager.Instance.Sounds["invalidAction"].Play(0.1f, 0, 0);
+                        SoundManager.Instance.SetSound("invalidAction", 0.1f);
                     }
                 }
             }
@@ -252,6 +257,8 @@ namespace TriangleGame.Manager
                     }
                 }
             }
+            
+            SoundManager.Instance.Update();//Plays a sound if selected
 
             _lastState = Mouse.GetState().LeftButton;
         }

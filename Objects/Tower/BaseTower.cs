@@ -11,5 +11,16 @@ namespace TriangleGame
         {
             _hover.Text = "Base";
         }
+        
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(_texture2D,
+                         new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                         _color);
+            
+            spriteBatch.Draw(_outerTexture,
+                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                Color.White);
+        }
     }
 }
