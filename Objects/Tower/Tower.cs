@@ -24,9 +24,9 @@ namespace TriangleGame
             
             string hoverText = "Klick";
 
-            _hover = new HoverText(hoverText, new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions), Color.LimeGreen);
+            _hover = new HoverText(hoverText, new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions), Color.LimeGreen);
             _healthBar = new HealthBar(_hitpoints, _hitpoints,
-                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions));
+                new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions));
         }
 
         public HoverText HoverText
@@ -46,11 +46,11 @@ namespace TriangleGame
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_outerTexture,
-                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions),
                 Color.White);
 
             spriteBatch.Draw(_texture2D,
-                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions),
                 _color);
         }
     }

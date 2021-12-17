@@ -15,11 +15,11 @@ namespace TriangleGame
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture2D,
-                         new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                         new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions),
                          _color);
             
             spriteBatch.Draw(_outerTexture,
-                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions),
                 Color.White);
         }
     }

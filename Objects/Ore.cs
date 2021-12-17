@@ -34,7 +34,7 @@ namespace TriangleGame
                     break;
             }
             
-            _hover = new HoverText(resource.ToString() + ":", new Rectangle(new Point(_position.X - (_dimensions.X / 2), _position.Y - (_dimensions.Y / 2)), _dimensions), Color.LimeGreen);
+            _hover = new HoverText(resource.ToString() + ":", new Rectangle(new Point(Position.X - (_dimensions.X / 2), Position.Y - (_dimensions.Y / 2)), Dimensions), Color.LimeGreen);
         }
 
         public ResourceType Resource

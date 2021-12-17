@@ -32,8 +32,10 @@ namespace TriangleGame.Manager
         private double _lastMiningInterval = 0;
         private double _miningIntervalSpeed = 2;
         
-        private double _lastWalInterval = 0;
-        private double _miningWalkSpeed = 0.5;
+        private double _lastMinionInterval = 0;
+        private double _minionIntervalSpeed = 0.2;
+
+        private Alien test;
 
         public GameManager(Game1 game1)
         {
@@ -45,7 +47,7 @@ namespace TriangleGame.Manager
         public void StartGame()
         {
             _lastMiningInterval = 0;
-            _lastWalInterval = 0;
+            _lastMinionInterval = 0;
         }
 
         public void AssignCollector(CollectorTower collector)
@@ -94,6 +96,9 @@ namespace TriangleGame.Manager
 
             _uiManager = new UIManager(_game1.graphics, new Point(64, 64));
             _uiManager.Initialize();
+
+            test = new Alien(new Point(100, 100), new Point(16,16), TextureManager.Instance.Sprites["pixel"], Color.RosyBrown, 100, 10,
+                4);
         }
 
         public void Update(GameTime gameTime)
@@ -101,13 +106,20 @@ namespace TriangleGame.Manager
             _mouse.Update(_camera);
             //Console.WriteLine("SCROLL: " + Mouse.GetState().ScrollWheelValue);
             
-            bool interval = false;
+            bool miningInterval = false;
+            bool minionInterval = false;
             var seconds = gameTime.TotalGameTime.TotalSeconds;
             if (seconds - _lastMiningInterval > _miningIntervalSpeed)
             {
                 Console.WriteLine("INTERVAL: " + seconds);
-                interval = true;
+                miningInterval = true;
                 _lastMiningInterval = seconds;
+            }
+
+            if (seconds - _lastMinionInterval > _minionIntervalSpeed)
+            {
+                minionInterval = true;
+                _lastMinionInterval = seconds;
             }
 
             _uiManager.Update(_resources["metal"].Amount, _resources["gas"].Amount, _resources["crystal"].Amount,
@@ -116,7 +128,7 @@ namespace TriangleGame.Manager
 
             Vector3 mousePosition = Vector3.Transform(new Vector3(Mouse.GetState().Position.ToVector2(), 0),
                 Matrix.CreateTranslation(new Vector3(_camera.Position, 0)));
-            AddResources(_towerManager.Update(_mouse, interval));
+            AddResources(_towerManager.Update(_mouse, miningInterval));
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -233,7 +245,7 @@ namespace TriangleGame.Manager
                 }
             }
 
-            if (interval)
+            if (miningInterval)
             {
                 foreach (var tower in _towerManager.Towers)
                 {
@@ -257,6 +269,12 @@ namespace TriangleGame.Manager
                     }
                 }
             }
+
+            if (minionInterval && _towerManager.Towers.Count > 0)
+            {
+                test.Select(_towerManager.Towers[0]);
+                test.Move();
+            }
             
             SoundManager.Instance.Update();//Plays a sound if selected
 
@@ -269,6 +287,7 @@ namespace TriangleGame.Manager
             spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.Position, 0)));
 
             _towerManager.Draw(spriteBatch);
+            test.Draw(spriteBatch);
 
             spriteBatch.End();
 

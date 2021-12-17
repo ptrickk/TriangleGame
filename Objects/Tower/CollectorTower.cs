@@ -24,7 +24,7 @@ namespace TriangleGame
             _reassign = false;
             
             _hover.Text = "Menü öffnen";
-            _ui = new CollectorUI(_position, ResourceType.None, new Rectangle(new Point(_position.X - (_dimensions.X/2), _position.Y - (_dimensions.Y/2)), _dimensions));
+            _ui = new CollectorUI(Position, ResourceType.None, new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions));
         }
 
         public ResourceType Prefered
@@ -98,15 +98,15 @@ namespace TriangleGame
         {
             if (_occupied != null)
             {
-                DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], _position.ToVector2(), _occupied.Position.ToVector2(), Color.Purple);
+                DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], Position.ToVector2(), _occupied.Position.ToVector2(), Color.Purple);
             }
 
             spriteBatch.Draw(_texture2D,
-                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions),
                 _color);
 
             spriteBatch.Draw(_outerTexture,
-                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                new Rectangle(new Point(Position.X - _dimensions.X / 2, Position.Y - _dimensions.Y / 2), Dimensions),
                 Color.White);
 
             _ui.Draw(spriteBatch);

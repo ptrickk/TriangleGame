@@ -29,6 +29,11 @@ namespace TriangleGame
             set => _dimensions = value;
         }
 
+        public Rectangle getRectangle()
+        {
+            return new Rectangle(_position, _dimensions);
+        }
+
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(_texture2D,
