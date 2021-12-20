@@ -16,7 +16,7 @@ namespace TriangleGame
         
         public Ore(Point position, Point dimension, ResourceType resource, Texture2D texture2D, Color color, int amount, bool occupied = false):base(position, texture2D, color)
         {
-            Dimensions = dimension;
+            _dimensions = new Rectangle(position, dimension);
             _amount = amount;
             _occupied = occupied;
             _resource = resource;
@@ -34,7 +34,7 @@ namespace TriangleGame
                     break;
             }
             
-            _hover = new HoverText(resource.ToString() + ":", new Rectangle(new Point(Position.X - (_dimensions.X / 2), Position.Y - (_dimensions.Y / 2)), Dimensions), Color.LimeGreen);
+            _hover = new HoverText(resource.ToString() + ":", new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), Size), Color.LimeGreen);
         }
 
         public ResourceType Resource
