@@ -16,7 +16,7 @@ namespace TriangleGame
             _hitpoints = hitpoints;
             _strength = strength;
             _speed = speed;
-            Dimensions = dimensions;
+            _dimensions = new Rectangle(position, dimensions);
 
             _selected = null;
         }
@@ -40,7 +40,7 @@ namespace TriangleGame
                 direction.Round();
                 Point travel = new Point((int) direction.X * _speed, (int) direction.Y * _speed);
 
-                _position += travel;
+                _dimensions.Location += travel;
             }
         }
 

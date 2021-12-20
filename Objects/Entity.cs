@@ -5,39 +5,39 @@ namespace TriangleGame
 {
     public class Entity
     {
-        protected Point _position;
+        //protected Point _position;
         protected Texture2D _texture2D;
         protected Color _color;
 
-        protected Point _dimensions = new Point(32, 32);
+        protected Rectangle _dimensions;// = new Point(32, 32);
 
         public Entity(Point position, Texture2D texture2D, Color color)
         {
-            _position = position;
+            _dimensions = new Rectangle(position, new Point(32, 32));
             _texture2D = texture2D;
             _color = color;
         }
 
         public Point Position
         {
-            get => _position;
+            get => _dimensions.Location;
         }
 
-        public Point Dimensions
+        public Point Size
+        {
+            get => _dimensions.Size ;
+            set => _dimensions.Size = value;
+        }
+
+        public Rectangle Dimensions
         {
             get => _dimensions;
-            set => _dimensions = value;
-        }
-
-        public Rectangle getRectangle()
-        {
-            return new Rectangle(_position, _dimensions);
         }
 
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(_texture2D,
-                new Rectangle(new Point(_position.X - _dimensions.X / 2, _position.Y - _dimensions.Y / 2), _dimensions),
+                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), _dimensions.Size),
                 _color);
         }
     }
