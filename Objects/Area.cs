@@ -31,17 +31,27 @@ namespace TriangleGame
             return area;
         }
 
+        public bool ContainsTower(Tower tower)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (_connectors[i].Contains(tower)) return true;
+            }
+
+            return false;
+        }
+        
         public bool Contains(Ore ore)
         {
             return Contains(ore.Position);
         }
-        
+
         public bool Contains(Tower tower)
         {
             return Contains(tower.Position);
         }
 
-        private bool Contains(Point point)
+        public bool Contains(Point point)
         {
             double[] a = new Double[3];
             for (int i = 0; i < 3; i++)

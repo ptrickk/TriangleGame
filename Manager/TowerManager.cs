@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharpDX.MediaFoundation;
+using TriangleGame.Objects.Enemys;
 using TriangleGame.Resources;
 
 namespace TriangleGame.Manager
@@ -15,11 +16,14 @@ namespace TriangleGame.Manager
         private List<Area> _areas;
 
         private List<Ore> _ores;
+        private List<Enemy> _enemies;
 
         private int _storage;
 
         private int _minDistance = 50;
         private int _maxDistance = 240;
+
+        private bool _enemySpawn = false;
 
         public TowerManager()
         {
@@ -27,6 +31,7 @@ namespace TriangleGame.Manager
             _connectors = new List<Connector>();
             _areas = new List<Area>();
             _ores = new List<Ore>();
+            _enemies = new List<Enemy>();
             _storage = 1000;
         }
 
@@ -48,6 +53,17 @@ namespace TriangleGame.Manager
         public List<Ore> Ores
         {
             get => _ores;
+        }
+
+        public List<Enemy> Enemies
+        {
+            get => _enemies;
+        }
+
+        public bool SpawnEnemies
+        {
+            get => _enemySpawn;
+            set => _enemySpawn = value;
         }
 
         public bool AddTower(Tower tower)
@@ -163,7 +179,7 @@ namespace TriangleGame.Manager
                                 break;
                         }
 
-                        _ores.Add(new Ore(new Point(i, j), new Point(6, 6), type, texture,
+                        _ores.Add(new Ore(new Point(i, j), new Point(6, 6), type, texture, 
                             Color.LimeGreen, 200));
                     }
                 }
@@ -270,13 +286,95 @@ namespace TriangleGame.Manager
 
         public void RemoveConnections(Tower t)
         {
-            for (int i = _connectors.Count - 1; i > 0; i--)
+            for (int i = _connectors.Count - 1; i >= 0; i--)
             {
                 if (_connectors[i].Contains(t)) _connectors.Remove(_connectors[i]);
             }
         }
 
-        private double Angle(Connector a, Connector b, Connector c)
+        public void RemoveAreas(Tower t)
+        {
+            for (int i = _areas.Count - 1; i >= 0; i--)
+            {
+                if (_areas[i].ContainsTower(t))
+                {
+                    _areas.Remove(_areas[i]);
+                }
+            }
+        }
+
+        public void ClearTower(Tower t)
+        {
+            RemoveAreas(t);
+            RemoveConnections(t);
+            _towers.Remove(t);
+        }
+
+        public void ClearAllTowers()
+        {
+            _areas.Clear();
+            _connectors.Clear();
+            _towers.Clear();
+        }
+
+        public void PlaceEnemy(Tower perimiter, int range)
+        {
+            Point minPos = new Point(perimiter.Position.X - range / 2, perimiter.Position.Y - range / 2);
+
+            Random rand = new Random();
+
+            Point spawnPosition;
+            int counter = 20;
+            
+            do
+            {
+                int x = (rand.Next() % range) + minPos.X;
+                int y = (rand.Next() % range) + minPos.Y;
+                spawnPosition = new Point(x, y);
+                counter--;
+            } while (IsInArea(spawnPosition) && counter > 0);
+
+            if (counter > 0)
+            {
+                _enemies.Add(new Enemy(spawnPosition, new Point(12,12), TextureManager.Instance.Sprites["pixel"], Color.Yellow, 50, 2, 2));
+            }
+        }
+
+        public bool IsInArea(Point position)
+        {
+            foreach (var area in _areas)
+            {
+                if (area.Contains(position)) return true;
+            }
+
+            return false;
+        }
+
+        public Tower ClosestTower(Point position)
+        {
+            Tower closest = null;
+            foreach (var tower in _towers)
+            {
+                if (closest == null)
+                {
+                    closest = tower;
+                }
+                else
+                {
+                    float distanceClosest = Vector2.Distance(position.ToVector2(), closest.Position.ToVector2());
+                    float distanceNew = Vector2.Distance(position.ToVector2(), tower.Position.ToVector2());
+
+                    if (distanceNew < distanceClosest)
+                    {
+                        closest = tower;
+                    }
+                }
+            }
+
+            return closest;
+        }
+
+        /*private double Angle(Connector a, Connector b, Connector c)
         {
             double step =
                 (Math.Pow(a.Length, 2) + Math.Pow(b.Length, 2) -
@@ -293,8 +391,19 @@ namespace TriangleGame.Manager
             }
 
             return sum;
-        }
+        }*/
 
+        public void EnemyUpdate()
+        {
+            foreach (var enemy in _enemies)
+            {
+                if (enemy.Action() == EnemyState.SEARCH)
+                {
+                    enemy.Select(ClosestTower(enemy.Position));
+                }
+            }
+        }
+        
         public Dictionary<string, int> Update(MouseInfo mouse, bool interval)
         {
             Dictionary<string, int> resource = new Dictionary<string, int>();
@@ -326,9 +435,22 @@ namespace TriangleGame.Manager
                 }
             }
 
+            if (interval)
+            {
+                if (_enemySpawn && _towers.Count > 0)
+                {
+                    Random rand = new Random();
+                    if (rand.Next() % 3 == 0)
+                    {
+                        int t = rand.Next() % _towers.Count;
+                        PlaceEnemy(_towers[t], 300);
+                    }
+                }
+            }
+
             return resource;
         }
-
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var ore in _ores)
@@ -344,6 +466,11 @@ namespace TriangleGame.Manager
             foreach (var area in _areas)
             {
                 area.Draw(spriteBatch);
+            }
+
+            foreach (var enemy in _enemies)
+            {
+                enemy.Draw(spriteBatch);
             }
 
             foreach (var tower in _towers)

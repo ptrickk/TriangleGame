@@ -23,6 +23,7 @@ namespace TriangleGame.UI
         public int CurrentValue
         {
             get => _currentValue;
+            set => _currentValue = value;
         }
 
         public bool Active

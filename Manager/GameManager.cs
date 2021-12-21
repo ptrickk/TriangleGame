@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using TriangleGame.GameObjects;
+using TriangleGame.Objects.Enemys;
 using TriangleGame.Resources;
 
 namespace TriangleGame.Manager
@@ -31,11 +31,12 @@ namespace TriangleGame.Manager
 
         private double _lastMiningInterval = 0;
         private double _miningIntervalSpeed = 2;
-        
+
         private double _lastMinionInterval = 0;
         private double _minionIntervalSpeed = 0.2;
 
-        private Alien test;
+        //private Enemy test;
+        private bool _running = true;
 
         public GameManager(Game1 game1)
         {
@@ -58,6 +59,15 @@ namespace TriangleGame.Manager
             {
                 ores.AddRange(_towerManager.GetUnoccupiedOresInArea(area, collector.Prefered));
                 if (ores.Count > 0) break;
+            }
+
+            if (ores.Count == 0)
+            {
+                foreach (var area in areas)
+                {
+                    ores.AddRange(_towerManager.GetUnoccupiedOresInArea(area, ResourceType.None));
+                    if (ores.Count > 0) break;
+                }
             }
 
             foreach (var ore in ores)
@@ -83,29 +93,24 @@ namespace TriangleGame.Manager
 
         public void Initialize()
         {
-            Texture2D resourceTexture = TextureManager.Instance.Sprites["pixel"];
             _resources.Add("metal", new Resource(ResourceType.Metal, 500, 500));
             _resources.Add("gas", new Resource(ResourceType.Gas, 500, 500));
             _resources.Add("crystal", new Resource(ResourceType.Crystals, 500, 500));
 
             _boundaries = new Rectangle(0, 0, 2000, 2000);
-            _camera = new Camera(_boundaries.Center.ToVector2(), 2);
+            _camera = new Camera(new Point(600,700).ToVector2(), 2);
 
             _towerManager = new TowerManager();
             _towerManager.GenerateOres(_boundaries, TextureManager.Instance.Sprites["pixel"]);
 
             _uiManager = new UIManager(_game1.graphics, new Point(64, 64));
             _uiManager.Initialize();
-
-            test = new Alien(new Point(100, 100), new Point(16,16), TextureManager.Instance.Sprites["pixel"], Color.RosyBrown, 100, 10,
-                4);
         }
 
         public void Update(GameTime gameTime)
         {
             _mouse.Update(_camera);
-            //Console.WriteLine("SCROLL: " + Mouse.GetState().ScrollWheelValue);
-            
+
             bool miningInterval = false;
             bool minionInterval = false;
             var seconds = gameTime.TotalGameTime.TotalSeconds;
@@ -157,15 +162,9 @@ namespace TriangleGame.Manager
                     {
                         switch (type)
                         {
-                            case TowerType.Attacker:
-                                price = new[] { 150, 200, 200 };
-                                break;
-                            case TowerType.Collector:
-                                price = new[] { 50, 200, 200 };
-                                break;
-                            case TowerType.Storage:
-                                price = new[] { 300, 50, 50 };
-                                break;
+                            case TowerType.Attacker: price = new[] { 150, 200, 200 }; break;
+                            case TowerType.Collector: price = new[] { 50, 200, 200 }; break;
+                            case TowerType.Storage: price = new[] { 300, 50, 50 }; break;
                         }
 
                         if (_resources["metal"].Amount >= price[0] && _resources["gas"].Amount >= price[1] &&
@@ -177,35 +176,29 @@ namespace TriangleGame.Manager
 
                     if (allowed)
                     {
-                        Tower newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
-                            TextureManager.Instance.Sprites["outerTower"], teamColor);
+                        Tower newTower;
 
                         switch (type)
                         {
                             case TowerType.Attacker:
                                 newTower = new AttackTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerAttackerTint"],
-                                    TextureManager.Instance.Sprites["towerAttackerTex"], teamColor);
-                                break;
+                                    TextureManager.Instance.Sprites["towerAttackerTex"], 500, teamColor); break;
                             case TowerType.Collector:
                                 newTower = new CollectorTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerCollectorTint"],
-                                    TextureManager.Instance.Sprites["towerCollectorTex"], teamColor);
-                                break;
+                                    TextureManager.Instance.Sprites["towerCollectorTex"], 500, teamColor); break;
                             case TowerType.Storage:
                                 newTower = new StorageTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerStorageTint"],
-                                    TextureManager.Instance.Sprites["towerStorageTex"], teamColor);
-                                break;
+                                    TextureManager.Instance.Sprites["towerStorageTex"], 500, teamColor); break;
                             case TowerType.Base:
                                 newTower = new BaseTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerBaseTint"],
-                                    TextureManager.Instance.Sprites["towerBaseTex"], teamColor);
-                                break;
+                                    TextureManager.Instance.Sprites["towerBaseTex"], 500, teamColor); break;
                             default:
                                 newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
-                                    TextureManager.Instance.Sprites["outerTower"], teamColor);
-                                break;
+                                    TextureManager.Instance.Sprites["outerTower"], 500, teamColor); break;
                         }
 
                         if (_towerManager.AddTower(newTower)) //Falls der Turm platziert werden kann
@@ -232,6 +225,11 @@ namespace TriangleGame.Manager
                                     _resources["crystal"].IncreaseMaxAmount(200);
                                 }
                             }
+
+                            if (_towerManager.Towers.Count > 4)
+                            {
+                                _towerManager.SpawnEnemies = true;
+                            }
                         }
                         else
                         {
@@ -249,7 +247,6 @@ namespace TriangleGame.Manager
             {
                 foreach (var tower in _towerManager.Towers)
                 {
-                    
                     if (tower.GetType() == typeof(CollectorTower))
                     {
                         CollectorTower ctower = (CollectorTower)tower;
@@ -272,11 +269,27 @@ namespace TriangleGame.Manager
 
             if (minionInterval && _towerManager.Towers.Count > 0)
             {
-                test.Select(_towerManager.Towers[0]);
-                test.Move();
+                _towerManager.EnemyUpdate();
+
+                for (int i = _towerManager.Towers.Count - 1; i >= 0; i--)
+                {
+                    if (!_towerManager.Towers[i].Alive)
+                    {
+                        if (_towerManager.Towers[i].GetType() == typeof(BaseTower))
+                        {
+                            _towerManager.ClearAllTowers();
+                            _running = false;
+                        }
+                        else
+                        {
+                            _towerManager.ClearTower(_towerManager.Towers[i]);
+                        }
+                        
+                    }
+                }
             }
-            
-            SoundManager.Instance.Update();//Plays a sound if selected
+
+            SoundManager.Instance.Update(); //Plays a sound if selected
 
             _lastState = Mouse.GetState().LeftButton;
         }
@@ -287,7 +300,6 @@ namespace TriangleGame.Manager
             spriteBatch.Begin(transformMatrix: Matrix.CreateTranslation(new Vector3(-_camera.Position, 0)));
 
             _towerManager.Draw(spriteBatch);
-            test.Draw(spriteBatch);
 
             spriteBatch.End();
 
