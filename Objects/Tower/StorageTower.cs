@@ -6,8 +6,8 @@ namespace TriangleGame
 {
     public class StorageTower : Tower
     {
-        public StorageTower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color teamColor)
-            : base(position, innerTexture, outerTexture, teamColor)
+        public StorageTower(Point position, Texture2D innerTexture, Texture2D outerTexture, int hitpoints, Color teamColor)
+            : base(position, innerTexture, outerTexture, hitpoints, teamColor)
         {
             _hover.Text = "Speicher";
         }

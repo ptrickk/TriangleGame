@@ -14,17 +14,20 @@ namespace TriangleGame
         private Ore _occupied;
         private ResourceType _prefered;
         private bool _reassign = false;
-        
+
         private CollectorUI _ui;
 
-        public CollectorTower(Point position, Texture2D innerTexture, Texture2D outerTexture, Color teamColor)
-            : base(position, innerTexture, outerTexture, teamColor)
+        public CollectorTower(Point position, Texture2D innerTexture, Texture2D outerTexture, int hitpoints,
+            Color teamColor)
+            : base(position, innerTexture, outerTexture, hitpoints, teamColor)
         {
             _prefered = ResourceType.None;
             _reassign = false;
-            
+
             _hover.Text = "Menü öffnen";
-            _ui = new CollectorUI(Position, ResourceType.None, new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), Size));
+            _ui = new CollectorUI(Position, ResourceType.None,
+                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2),
+                    Size));
         }
 
         public ResourceType Prefered
@@ -40,11 +43,13 @@ namespace TriangleGame
                 _ui.Update(mouse);
                 ResourceType prev = _prefered;
                 _prefered = _ui.Selected();
-
-                if (prev != _prefered && _occupied.Resource != _prefered)
+                if (_occupied != null)
                 {
-                    _occupied.Release();
-                    RemoveOccupied();
+                    if (prev != _prefered && _occupied.Resource != _prefered)
+                    {
+                        _occupied.Release();
+                        RemoveOccupied();
+                    }
                 }
             }
         }
@@ -98,15 +103,18 @@ namespace TriangleGame
         {
             if (_occupied != null)
             {
-                DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], Position.ToVector2(), _occupied.Position.ToVector2(), Color.Purple);
+                DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], Position.ToVector2(),
+                    _occupied.Position.ToVector2(), Color.Purple);
             }
 
             spriteBatch.Draw(_texture2D,
-                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), Size),
+                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2),
+                    Size),
                 _color);
 
             spriteBatch.Draw(_outerTexture,
-                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), Size),
+                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2),
+                    Size),
                 Color.White);
 
             _ui.Draw(spriteBatch);

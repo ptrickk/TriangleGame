@@ -13,8 +13,9 @@ namespace TriangleGame
         private bool _occupied;
 
         private HoverText _hover;
-        
-        public Ore(Point position, Point dimension, ResourceType resource, Texture2D texture2D, Color color, int amount, bool occupied = false):base(position, texture2D, color)
+
+        public Ore(Point position, Point dimension, ResourceType resource, Texture2D texture2D, Color color, int amount,
+            bool occupied = false) : base(position, texture2D, 0, color)
         {
             _dimensions = new Rectangle(position, dimension);
             _amount = amount;
@@ -33,15 +34,17 @@ namespace TriangleGame
                     _color = Color.Silver;
                     break;
             }
-            
-            _hover = new HoverText(resource.ToString() + ":", new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), Size), Color.LimeGreen);
+
+            _hover = new HoverText(resource.ToString() + ":",
+                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2),
+                    Size), Color.LimeGreen);
         }
 
         public ResourceType Resource
         {
             get => _resource;
         }
-        
+
         public HoverText HoverText
         {
             get => _hover;
@@ -59,7 +62,7 @@ namespace TriangleGame
             else if (_resource == ResourceType.Crystals) return "crystal";
             else return "error";
         }
-        
+
         public bool Occupied
         {
             get => _occupied;
@@ -69,7 +72,7 @@ namespace TriangleGame
         {
             _occupied = false;
         }
-        
+
         public bool SetAsOccupied()
         {
             if (_occupied)
@@ -82,7 +85,7 @@ namespace TriangleGame
                 return true;
             }
         }
-        
+
         public int Mine()
         {
             int material = 0;
@@ -100,6 +103,7 @@ namespace TriangleGame
                     material = 10;
                 }
             }
+
             return material;
         }
     }
