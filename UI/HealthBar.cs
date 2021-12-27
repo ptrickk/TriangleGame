@@ -32,6 +32,11 @@ namespace TriangleGame.UI
             set => _active = value;
         }
 
+        public void UpdatePosition(Point position)
+        {
+            _parent.Location = position;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (_active)

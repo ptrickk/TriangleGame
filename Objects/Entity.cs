@@ -35,9 +35,9 @@ namespace TriangleGame
             get => _dimensions;
         }
 
-        public virtual void Draw(SpriteBatch _spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            _spriteBatch.Draw(_texture2D,
+            spriteBatch.Draw(_texture2D,
                 new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), _dimensions.Size),
                 _color);
         }

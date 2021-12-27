@@ -63,12 +63,16 @@ namespace TriangleGame.Resources
             }
         }
         /// <summary>
-        /// Increases maximum amount
+        /// Increases (or decreases) maximum amount
         /// </summary>
         /// <param name="increase"></param>
         public void IncreaseMaxAmount(int increase)
         {
             _maxAmount += increase;
+            if (_maxAmount < _amount)
+            {
+                _amount = _maxAmount;
+            }
         }
     }
 }
