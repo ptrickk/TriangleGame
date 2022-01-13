@@ -53,7 +53,8 @@ namespace TriangleGame
 
         public bool Contains(Point point)
         {
-            double[] a = new Double[3];
+            //TODO to much storage
+            var a = new double[3];
             for (int i = 0; i < 3; i++)
             {
                 double t1 = Vector2.Distance(_connectors[i].TowerA.Position.ToVector2(), point.ToVector2());
@@ -62,12 +63,8 @@ namespace TriangleGame
                 double s =  (_connectors[i].Length + t1 + t2) / 2;
                 a[i] = Math.Sqrt(s * (s - _connectors[i].Length) * (s - t1) * (s - t2));
             }
-            if (Math.Abs(a[0] + a[1] + a[2] - Size()) < 0.1)
-            {
-                return true;
-            }
-
-            return false;
+            
+            return Math.Abs(a[0] + a[1] + a[2] - Size()) < 0.1;
         }
 
         public Tower[] GetTowers()

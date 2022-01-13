@@ -185,7 +185,7 @@ namespace TriangleGame.Manager
                             case TowerType.Attacker:
                                 newTower = new AttackTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerAttackerTint"],
-                                    TextureManager.Instance.Sprites["towerAttackerTex"], 500, 200, 3, teamColor); break;
+                                    TextureManager.Instance.Sprites["towerAttackerTex"], 500, 200, 4, teamColor); break;
                             case TowerType.Collector:
                                 newTower = new CollectorTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerCollectorTint"],
@@ -323,7 +323,8 @@ namespace TriangleGame.Manager
             _uiManager.Draw(spriteBatch);
 
             //spriteBatch.Draw(_textureManager.Sprites["pixel"], new Rectangle(Mouse.GetState().Position, new Point( 20, 20)), Color.Red);
-
+            
+            
             spriteBatch.End();
         }
     }
