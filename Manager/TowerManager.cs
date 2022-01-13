@@ -494,6 +494,14 @@ namespace TriangleGame.Manager
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            foreach (var atower in _towers)
+            {
+                if (atower is AttackTower a)
+                {
+                    a.DrawRange(spriteBatch);
+                }
+            }
+            
             foreach (var ore in _ores)
             {
                 ore.Draw(spriteBatch);

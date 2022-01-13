@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,11 +9,15 @@ namespace TriangleGame.GameObjects
     public static class DrawFuntions
     {
         private static GraphicsDevice _graphicsDevice;
+        private static List<Color> _colorData = new List<Color>();
+        private static Texture2D _texture;
+
         public static void Init(GraphicsDevice graphicsDevice)
         {
             _graphicsDevice = graphicsDevice;
+            _colorData = new List<Color>();
         }
-        
+
         public static void DrawLine(SpriteBatch spriteBatch, Texture2D texture, Vector2 point1, Vector2 point2,
             Color color,
             float thickness = 1f)
@@ -33,36 +38,40 @@ namespace TriangleGame.GameObjects
 
         public static void DrawCircle(SpriteBatch spriteBatch, Point position, int radius, Color color)
         {
-            Texture2D texture = new Texture2D(_graphicsDevice, radius, radius);
-            Color[] colorData = new Color[radius * radius];
-
+            radius *= 2;
             float diam = radius / 2f;
             float diamsq = diam * diam;
 
-            for (int x = 0; x < radius; x++)
+            if (_colorData.Count != radius * radius)
             {
-                for (int y = 0; y < radius; y++)
+                _texture = new Texture2D(_graphicsDevice, radius, radius);
+                _colorData.Clear();
+                for (int i = 0; i < radius * radius; i++)
                 {
-                    int index = x * radius + y;
-                    Vector2 pos = new Vector2(x - diam, y - diam);
-                    if (pos.LengthSquared() <= diamsq)
+                    _colorData.Add(Color.White);
+                }
+
+                for (int x = 0; x < radius; x++)
+                {
+                    for (int y = 0; y < radius; y++)
                     {
-                        colorData[index] = Color.White;
-                    }
-                    else
-                    {
-                        colorData[index] = Color.Transparent;
+                        int index = x * radius + y;
+                        Vector2 pos = new Vector2(x - diam, y - diam);
+                        if (pos.LengthSquared() <= diamsq)
+                        {
+                            _colorData[index] = Color.White;
+                        }
+                        else
+                        {
+                            _colorData[index] = Color.Transparent;
+                        }
                     }
                 }
+                
+                _texture.SetData(_colorData.ToArray());
             }
 
-            texture.SetData(colorData);
-            colorData = null;
-            GC.Collect();
-            
-            spriteBatch.Draw(texture, position.ToVector2(), null, color);
-
-            
+            spriteBatch.Draw(_texture, position.ToVector2(), null, color);
         }
     }
 }

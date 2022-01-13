@@ -68,10 +68,13 @@ namespace TriangleGame
             {
                 DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], Position.ToVector2(), _target.Position.ToVector2(), Color.Violet);
             }
-            
-            DrawFuntions.DrawCircle(spriteBatch, new Point(_dimensions.X - _range / 2, _dimensions.Y - _range / 2), _range, new Color(200, 0, 0 , 50));
-            
+
             base.Draw(spriteBatch);
+        }
+
+        public void DrawRange(SpriteBatch spriteBatch)
+        {
+            DrawFuntions.DrawCircle(spriteBatch, new Point(_dimensions.X - _range, _dimensions.Y - _range), _range, new Color(200, 0, 0 , 50));
         }
     }
 }
