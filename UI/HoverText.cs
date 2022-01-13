@@ -25,6 +25,11 @@ namespace TriangleGame.UI
             set => _text = value;
         }
 
+        public bool Active
+        {
+            get => _active;
+        }
+
         public bool Update(Point mousePoint)
         {
             if (_dim.Contains(mousePoint))
