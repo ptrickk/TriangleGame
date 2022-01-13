@@ -67,7 +67,7 @@ namespace TriangleGame
             return false;
         }
 
-        public void Update()
+        public virtual void Update()
         {
         }
 

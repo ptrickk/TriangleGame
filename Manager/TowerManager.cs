@@ -20,7 +20,7 @@ namespace TriangleGame.Manager
 
         private int _storage;
 
-        private int _minDistance = 50;
+        private int _minDistance = 75;
         private int _maxDistance = 240;
 
         private bool _enemySpawn = false;
@@ -82,7 +82,7 @@ namespace TriangleGame.Manager
             {
                 float distance = Vector2.Distance(t.Position.ToVector2(), tower.Position.ToVector2());
 
-                if (distance < _minDistance )//&& distance < _maxDistance
+                if (distance < _minDistance) //&& distance < _maxDistance
                 {
                     check = false;
                 }
@@ -140,6 +140,7 @@ namespace TriangleGame.Manager
                     ores.Add(ore);
                     return ores;
                 }
+
                 if (ore.Resource == preffered)
                 {
                     ores.Add(ore);
@@ -179,7 +180,7 @@ namespace TriangleGame.Manager
                                 break;
                         }
 
-                        _ores.Add(new Ore(new Point(i, j), new Point(6, 6), type, texture, 
+                        _ores.Add(new Ore(new Point(i, j), new Point(6, 6), type, texture,
                             Color.LimeGreen, 200));
                     }
                 }
@@ -197,9 +198,9 @@ namespace TriangleGame.Manager
                 if (t == tower1) continue;
 
                 float distance = Vector2.Distance(t.Position.ToVector2(), tower1.Position.ToVector2());
-                
+
                 if (distance < _minDistance || distance > _maxDistance) continue;
-                
+
                 var c1 = new Connector(t, tower1);
                 bool intersect = false;
 
@@ -317,30 +318,31 @@ namespace TriangleGame.Manager
             _towers.Clear();
         }
 
-        public void PlaceEnemy(Tower perimiter, int range)
+        private void PlaceEnemy(Tower perimiter, int range)
         {
-            Point minPos = new Point(perimiter.Position.X - range / 2, perimiter.Position.Y - range / 2);
+            Point maxDistance = new Point(perimiter.Position.X - range / 2, perimiter.Position.Y - range / 2);
 
             Random rand = new Random();
 
             Point spawnPosition;
             int counter = 20;
-            
+
             do
             {
-                int x = (rand.Next() % range) + minPos.X;
-                int y = (rand.Next() % range) + minPos.Y;
+                int x = (rand.Next() % range) + maxDistance.X;
+                int y = (rand.Next() % range) + maxDistance.Y;
                 spawnPosition = new Point(x, y);
                 counter--;
             } while (IsInArea(spawnPosition) && counter > 0);
 
             if (counter > 0)
             {
-                _enemies.Add(new Enemy(spawnPosition, new Point(12,12), TextureManager.Instance.Sprites["pixel"], Color.Yellow, 50, 2, 2));
+                _enemies.Add(new Enemy(spawnPosition, new Point(12, 12), TextureManager.Instance.Sprites["pixel"],
+                    Color.Yellow, 50, 2, 2));
             }
         }
 
-        public bool IsInArea(Point position)
+        private bool IsInArea(Point position)
         {
             foreach (var area in _areas)
             {
@@ -350,7 +352,7 @@ namespace TriangleGame.Manager
             return false;
         }
 
-        public Tower ClosestTower(Point position)
+        private Tower ClosestTower(Point position)
         {
             Tower closest = null;
             foreach (var tower in _towers)
@@ -367,6 +369,30 @@ namespace TriangleGame.Manager
                     if (distanceNew < distanceClosest)
                     {
                         closest = tower;
+                    }
+                }
+            }
+
+            return closest;
+        }
+
+        public Enemy ClosestEnemy(Point position)
+        {
+            Enemy closest = null;
+            foreach (var enemy in _enemies)
+            {
+                if (closest == null)
+                {
+                    closest = enemy;
+                }
+                else
+                {
+                    float distanceClosest = Vector2.Distance(position.ToVector2(), closest.Position.ToVector2());
+                    float distanceNew = Vector2.Distance(position.ToVector2(), enemy.Position.ToVector2());
+
+                    if (distanceNew < distanceClosest)
+                    {
+                        closest = enemy;
                     }
                 }
             }
@@ -395,26 +421,30 @@ namespace TriangleGame.Manager
 
         public void EnemyUpdate()
         {
-            foreach (var enemy in _enemies)
+            for (int i = _enemies.Count - 1; i >= 0; i--)
             {
-                if (enemy.Action() == EnemyState.SEARCH)
+                EnemyState state = _enemies[i].Action();
+                if (state == EnemyState.SEARCH)
                 {
-                    enemy.Select(ClosestTower(enemy.Position));
+                    _enemies[i].Select(ClosestTower(_enemies[i].Position));
+                }
+                else if (state == EnemyState.DEAD)
+                {
+                    _enemies.Remove(_enemies[i]);
                 }
             }
         }
-        
-        public Dictionary<string, int> Update(MouseInfo mouse, bool interval)
+
+        public Dictionary<string, int> Update(MouseInfo mouse, bool miningInterval, bool attackInterval)
         {
             Dictionary<string, int> resource = new Dictionary<string, int>();
             foreach (var tower in _towers)
             {
                 tower.HealthBar.Active = tower.HoverText.Update(mouse.RelativPosition);
-                
                 if (tower is CollectorTower ctower)
                 {
                     ctower.UpdateUI(mouse);
-                    if (interval)
+                    if (miningInterval)
                     {
                         KeyValuePair<string, int> temp = new KeyValuePair<string, int>("none", -1);
                         temp = ctower.Update();
@@ -433,9 +463,20 @@ namespace TriangleGame.Manager
                         }
                     }
                 }
+                else if (tower is AttackTower atower && attackInterval)
+                {
+                    if (atower.TargetSelected())
+                    {
+                        atower.Update();
+                    }
+                    else
+                    {
+                        atower.TargetEnemy(ClosestEnemy(atower.Position));
+                    }
+                }
             }
 
-            if (interval)
+            if (miningInterval)
             {
                 if (_enemySpawn && _towers.Count > 0)
                 {
@@ -443,16 +484,24 @@ namespace TriangleGame.Manager
                     if (rand.Next() % 3 == 0)
                     {
                         int t = rand.Next() % _towers.Count;
-                        PlaceEnemy(_towers[t], 300);
+                        PlaceEnemy(_towers[t], 500);
                     }
                 }
             }
 
             return resource;
         }
-        
+
         public void Draw(SpriteBatch spriteBatch)
         {
+            foreach (var atower in _towers)
+            {
+                if (atower is AttackTower a)
+                {
+                    a.DrawRange(spriteBatch);
+                }
+            }
+            
             foreach (var ore in _ores)
             {
                 ore.Draw(spriteBatch);
@@ -489,6 +538,11 @@ namespace TriangleGame.Manager
             {
                 tower.HealthBar.Draw(spriteBatch);
                 tower.HoverText.Draw(spriteBatch);
+            }
+            
+            foreach (var enemy in _enemies)
+            {
+                enemy.HealthBar.Draw(spriteBatch);
             }
         }
     }

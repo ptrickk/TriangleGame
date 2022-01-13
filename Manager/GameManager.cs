@@ -35,6 +35,8 @@ namespace TriangleGame.Manager
         private double _lastMinionInterval = 0;
         private double _minionIntervalSpeed = 0.2;
 
+        private int storageIncreasePerTower = 200;
+
         //private Enemy test;
         private bool _running = true;
 
@@ -133,7 +135,7 @@ namespace TriangleGame.Manager
 
             Vector3 mousePosition = Vector3.Transform(new Vector3(Mouse.GetState().Position.ToVector2(), 0),
                 Matrix.CreateTranslation(new Vector3(_camera.Position, 0)));
-            AddResources(_towerManager.Update(_mouse, miningInterval));
+            AddResources(_towerManager.Update(_mouse, miningInterval, minionInterval));
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -183,7 +185,7 @@ namespace TriangleGame.Manager
                             case TowerType.Attacker:
                                 newTower = new AttackTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerAttackerTint"],
-                                    TextureManager.Instance.Sprites["towerAttackerTex"], 500, teamColor); break;
+                                    TextureManager.Instance.Sprites["towerAttackerTex"], 500, 200, 4, teamColor); break;
                             case TowerType.Collector:
                                 newTower = new CollectorTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerCollectorTint"],
@@ -195,7 +197,7 @@ namespace TriangleGame.Manager
                             case TowerType.Base:
                                 newTower = new BaseTower(position.ToPoint(),
                                     TextureManager.Instance.Sprites["towerBaseTint"],
-                                    TextureManager.Instance.Sprites["towerBaseTex"], 500, teamColor); break;
+                                    TextureManager.Instance.Sprites["towerBaseTex"], 1000, teamColor); break;
                             default:
                                 newTower = new Tower(position.ToPoint(), TextureManager.Instance.Sprites["innerTower"],
                                     TextureManager.Instance.Sprites["outerTower"], 500, teamColor); break;
@@ -220,9 +222,9 @@ namespace TriangleGame.Manager
 
                                 if (newTower.GetType() == typeof(StorageTower))
                                 {
-                                    _resources["metal"].IncreaseMaxAmount(200);
-                                    _resources["gas"].IncreaseMaxAmount(200);
-                                    _resources["crystal"].IncreaseMaxAmount(200);
+                                    _resources["metal"].IncreaseMaxAmount(storageIncreasePerTower);
+                                    _resources["gas"].IncreaseMaxAmount(storageIncreasePerTower);
+                                    _resources["crystal"].IncreaseMaxAmount(storageIncreasePerTower);
                                 }
                             }
 
@@ -282,6 +284,12 @@ namespace TriangleGame.Manager
                         }
                         else
                         {
+                            if (_towerManager.Towers[i] is StorageTower)
+                            {
+                                _resources["metal"].IncreaseMaxAmount(-storageIncreasePerTower);
+                                _resources["gas"].IncreaseMaxAmount(-storageIncreasePerTower);
+                                _resources["crystal"].IncreaseMaxAmount(-storageIncreasePerTower);
+                            }
                             _towerManager.ClearTower(_towerManager.Towers[i]);
                         }
                         
@@ -315,7 +323,8 @@ namespace TriangleGame.Manager
             _uiManager.Draw(spriteBatch);
 
             //spriteBatch.Draw(_textureManager.Sprites["pixel"], new Rectangle(Mouse.GetState().Position, new Point( 20, 20)), Color.Red);
-
+            
+            
             spriteBatch.End();
         }
     }

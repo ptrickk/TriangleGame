@@ -28,7 +28,9 @@ namespace TriangleGame
         protected override void Initialize()
         {
             base.Initialize();
-
+            
+            DrawFuntions.Init(GraphicsDevice);
+            
             _gameManager = new GameManager(this);
             _gameManager.Initialize();
             _gameManager.StartGame();

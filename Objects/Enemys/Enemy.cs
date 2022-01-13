@@ -2,15 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using TriangleGame.GameObjects;
 using TriangleGame.Manager;
+using TriangleGame.UI;
 
 namespace TriangleGame.Objects.Enemys
 {
     public class Enemy : Entity
     {
+        protected int _hitpoints;
         protected int _strength;
         protected int _speed;
         protected int _range;
-        protected EnemyState _state; 
+        
+        protected HealthBar _healthBar;
 
         protected Tower _selected;
 
@@ -22,10 +25,19 @@ namespace TriangleGame.Objects.Enemys
             _speed = speed;
             _dimensions = new Rectangle(position, dimensions);
             _range = 60;
+            _hitpoints = hitpoints;
             
             _selected = null;
 
             _animation = false;
+            
+            _healthBar = new HealthBar(_hitpoints, _hitpoints,
+                new Rectangle(new Point(_dimensions.X - _dimensions.Width / 2, Position.Y - _dimensions.Height / 2), Size));
+        }
+        
+        public HealthBar HealthBar
+        {
+            get => _healthBar;
         }
 
         public void Select(Tower select)
@@ -35,6 +47,10 @@ namespace TriangleGame.Objects.Enemys
 
         public EnemyState Action()
         {
+            if (_hitpoints == 0)
+            {
+                return EnemyState.DEAD;
+            }
             if (_selected == null)
             {
                 _animation = false;
@@ -53,9 +69,10 @@ namespace TriangleGame.Objects.Enemys
                 Move();//Move closer to selected target
                 return EnemyState.MOVE;
             }
+            
         }
-        
-        public void Move()
+
+        private void Move()
         {
             if (_selected != null)
             {
@@ -65,10 +82,12 @@ namespace TriangleGame.Objects.Enemys
                 Point travel = new Point((int) direction.X * _speed, (int) direction.Y * _speed);
 
                 _dimensions.Location += travel;
+                
+                _healthBar.UpdatePosition(_dimensions.Location);
             }
         }
 
-        public void Attack()
+        private void Attack()
         {
             if (_selected.TakeDamage(_strength))
             {
@@ -76,15 +95,34 @@ namespace TriangleGame.Objects.Enemys
                 _selected = null;
             }
         }
+        
+        public bool TakeDamage(int damage)
+        {
+            _hitpoints -= damage;
+            _healthBar.Active = true;
+            if (_hitpoints <= 0)
+            {
+                _hitpoints = 0;
+                Die();
+                return true;
+            }
+            _healthBar.CurrentValue = _hitpoints;
+            return false;
+        }
 
-        public override void Draw(SpriteBatch _spriteBatch)
+        public void Die()
+        {
+            
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (_animation && _selected != null)
             {
-                DrawFuntions.DrawLine(_spriteBatch, TextureManager.Instance.Sprites["pixel"], Position.ToVector2(), _selected.Position.ToVector2(), Color.Red);
+                DrawFuntions.DrawLine(spriteBatch, TextureManager.Instance.Sprites["pixel"], Position.ToVector2(), _selected.Position.ToVector2(), Color.Red);
             }
             
-            base.Draw(_spriteBatch);
+            base.Draw(spriteBatch);
         }
     }
 }
